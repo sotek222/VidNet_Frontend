@@ -2,51 +2,43 @@ import React from "react";
 import TheatreCreationModal from "./TheatreCreationModal";
 import TheatreModal from "./TheatreModal";
 import UserAccountModal from "./UserAccountModal";
+import SignupLoginAboutModal from "./SignupLoginAboutModal";
+import adapter from "../services/adapter";
+import { Route, Switch, withRouter } from "react-router-dom";
 
 class Desktop extends React.Component {
-  state = {
-    currentModal: "",
-    url: ""
-  };
-
-  renderModal = () => {
-    switch (this.state.currentModal) {
-      case "CreateTheatre":
-        return (
-          <TheatreCreationModal handleVideoSubmit={this.handleVideoSubmit} />
-        );
-        break;
-      case "Theatre":
-        return <TheatreModal url={this.state.url} />;
-        break;
-      case "User Account":
-        return <UserAccountModal />;
-        break;
-      default:
-        return null;
-    }
-  };
+  // state = {};
+  // componentDidMount() {}
 
   handleVideoSubmit = url => {
-    this.setState({ currentModal: "Theatre", url: url });
+    adapter.createTheatre(url).then(theatre => {
+      this.setState(this.props.history.push(`/theatre/${theatre.id}`));
+    });
   };
 
   render() {
     return (
       <div>
         <h1>VidNet</h1>
-        <button
-          onClick={() => this.setState({ currentModal: "CreateTheatre" })}
-        >
-          Add a Theatre
+        <button onClick={() => this.props.history.push("/theatre")}>
+          Create a theatre
         </button>
-        <button onClick={() => this.setState({ currentModal: "User Account" })}>
-          View Account
-        </button>
-        {this.renderModal()}
+
+        <Switch>
+          <Route path="/signin" render={() => <SignupLoginAboutModal />} />
+          <Route path="/theatre/:id" render={() => <TheatreModal />} />
+          <Route
+            path="/theatre"
+            render={() => (
+              <TheatreCreationModal
+                handleVideoSubmit={this.handleVideoSubmit}
+              />
+            )}
+          />
+        </Switch>
       </div>
     );
   }
 }
 
-export default Desktop;
+export default withRouter(Desktop);
