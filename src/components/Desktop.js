@@ -7,12 +7,9 @@ import adapter from "../services/adapter";
 import { Route, Switch, withRouter } from "react-router-dom";
 
 class Desktop extends React.Component {
-  // state = {};
-  // componentDidMount() {}
-
   handleVideoSubmit = url => {
     adapter.createTheatre(url).then(theatre => {
-      this.setState(this.props.history.push(`/theatre/${theatre.id}`));
+      this.props.history.push(`/theatre/${theatre.id}`);
     });
   };
 
@@ -23,7 +20,6 @@ class Desktop extends React.Component {
         <button onClick={() => this.props.history.push("/theatre")}>
           Create a theatre
         </button>
-
         <Switch>
           <Route path="/signin" render={() => <SignupLoginAboutModal />} />
           <Route path="/theatre/:id" render={() => <TheatreModal />} />
