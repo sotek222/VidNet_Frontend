@@ -7,7 +7,7 @@ import * as serviceWorker from "./serviceWorker";
 import { ActionCableProvider } from "react-actioncable-provider";
 
 ReactDOM.render(
-  <ActionCableProvider url={"ws://localhost:3000/cable"}>
+  <ActionCableProvider url={"ws://localhost:4000/cable"}>
     <Router>
       <App />
     </Router>

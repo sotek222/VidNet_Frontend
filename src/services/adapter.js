@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api/v1";
+const API_URL = "http://localhost:4000/api/v1";
 
 // will need to take more args in the future when the host is known, etc.
 const createTheatre = url => {
@@ -30,38 +30,74 @@ const getTheatre = id => {
 };
 
 const updateTheatrePlaying = (theatre, playing) => {
-  let {
-    id,
-    host_id,
-    src,
-    text_chat,
-    audio_chat,
-    video_chat,
-    is_public,
-    muted,
-    volume,
-    elapsed_time
-  } = theatre;
+  let { id, muted, volume, elapsed_time } = theatre;
   return fetch(`${API_URL}/theatres/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      theatre: {
-        host_id: host_id,
-        src: src,
-        text_chat: text_chat,
-        audio_chat: audio_chat,
-        video_chat: video_chat,
-        is_public: is_public,
-        playing: playing,
-        muted: muted,
-        volume: volume,
-        elapsed_time: elapsed_time
-      }
+      playing: playing,
+      muted: muted,
+      volume: volume,
+      elapsed_time: elapsed_time
     })
   }).then(resp => resp.json());
 };
 
-export default { createTheatre, getTheatre, updateTheatrePlaying };
+const updateTheatreMute = (theatre, muted) => {
+  let { id, playing, volume, elapsed_time } = theatre;
+  return fetch(`${API_URL}/theatres/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      playing: playing,
+      muted: muted,
+      volume: volume,
+      elapsed_time: elapsed_time
+    })
+  }).then(resp => resp.json());
+};
+
+const updateTheatreVolume = (theatre, volume) => {
+  let { id, playing, muted, elapsed_time } = theatre;
+  return fetch(`${API_URL}/theatres/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      playing: playing,
+      muted: muted,
+      volume: volume,
+      elapsed_time: elapsed_time
+    })
+  }).then(resp => resp.json());
+};
+
+const updateTheatreTime = (theatre, time) => {
+  let { id, playing, muted, volume } = theatre;
+  return fetch(`${API_URL}/theatres/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      playing: playing,
+      muted: muted,
+      volume: volume,
+      elapsed_time: time
+    })
+  }).then(resp => resp.json());
+};
+
+export default {
+  createTheatre,
+  getTheatre,
+  updateTheatrePlaying,
+  updateTheatreMute,
+  updateTheatreVolume,
+  updateTheatreTime
+};

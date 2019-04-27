@@ -19,6 +19,12 @@ class TheatreModal extends React.Component {
     adapter.updateTheatrePlaying(theatre, playing);
   };
 
+  handleMuteClick = () => {
+    let theatre = this.state.theatre;
+    let muted = !this.state.theatre.muted;
+    adapter.updateTheatreMute(theatre, muted);
+  };
+
   handleConnected = () => {
     console.log("CONNECTED");
   };
@@ -28,6 +34,11 @@ class TheatreModal extends React.Component {
   };
 
   render() {
+    console.log(
+      "%c THE VIDEO SHOULD CURRENTLY BE PLAYING?",
+      "blue",
+      this.state.theatre.playing
+    );
     let id = this.state.theatre.id;
     let elapsed_time = this.state.theatre.elapsed_time;
     return (
@@ -47,6 +58,8 @@ class TheatreModal extends React.Component {
         <ReactPlayer
           playing={this.state.theatre.playing}
           url={this.state.theatre.src}
+          volume={1}
+          muted={this.state.theatre.muted}
           config={{
             youtube: {
               playerVars: { start: elapsed_time }
@@ -54,6 +67,7 @@ class TheatreModal extends React.Component {
           }}
         />
         <button onClick={this.handlePlayClick}>Play/Pause</button>
+        <button onClick={this.handleMuteClick}>Mute/Unmute</button>
       </div>
     );
   }
