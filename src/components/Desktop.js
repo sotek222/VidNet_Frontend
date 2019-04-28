@@ -13,6 +13,11 @@ class Desktop extends React.Component {
     });
   };
 
+  handleLoginSubmit = user => {
+    console.log("%c WE HANDLED THAT", "color: red", user);
+    // adapter.
+  };
+
   render() {
     return (
       <div>
@@ -21,7 +26,14 @@ class Desktop extends React.Component {
           Create a theatre
         </button>
         <Switch>
-          <Route path="/signin" render={() => <SignupLoginAboutModal />} />
+          <Route
+            path="/signin"
+            render={() => (
+              <SignupLoginAboutModal
+                handleLoginSubmit={this.handleLoginSubmit}
+              />
+            )}
+          />
           <Route path="/theatre/:id" render={() => <TheatreModal />} />
           <Route
             path="/theatre"

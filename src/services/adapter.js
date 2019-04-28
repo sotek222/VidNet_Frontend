@@ -18,7 +18,6 @@ const createTheatre = url => {
         is_public: true,
         playing: false,
         muted: false,
-        volume: 1.0,
         elapsed_time: 0
       }
     })
@@ -30,7 +29,7 @@ const getTheatre = id => {
 };
 
 const updateTheatrePlaying = (theatre, playing) => {
-  let { id, muted, volume, elapsed_time } = theatre;
+  let { id, muted, elapsed_time } = theatre;
   return fetch(`${API_URL}/theatres/${id}`, {
     method: "PATCH",
     headers: {
@@ -39,14 +38,13 @@ const updateTheatrePlaying = (theatre, playing) => {
     body: JSON.stringify({
       playing: playing,
       muted: muted,
-      volume: volume,
       elapsed_time: elapsed_time
     })
   }).then(resp => resp.json());
 };
 
 const updateTheatreMute = (theatre, muted) => {
-  let { id, playing, volume, elapsed_time } = theatre;
+  let { id, playing, elapsed_time } = theatre;
   return fetch(`${API_URL}/theatres/${id}`, {
     method: "PATCH",
     headers: {
@@ -55,30 +53,13 @@ const updateTheatreMute = (theatre, muted) => {
     body: JSON.stringify({
       playing: playing,
       muted: muted,
-      volume: volume,
-      elapsed_time: elapsed_time
-    })
-  }).then(resp => resp.json());
-};
-
-const updateTheatreVolume = (theatre, volume) => {
-  let { id, playing, muted, elapsed_time } = theatre;
-  return fetch(`${API_URL}/theatres/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      playing: playing,
-      muted: muted,
-      volume: volume,
       elapsed_time: elapsed_time
     })
   }).then(resp => resp.json());
 };
 
 const updateTheatreTime = (theatre, time) => {
-  let { id, playing, muted, volume } = theatre;
+  let { id, playing, muted } = theatre;
   return fetch(`${API_URL}/theatres/${id}`, {
     method: "PATCH",
     headers: {
@@ -87,7 +68,6 @@ const updateTheatreTime = (theatre, time) => {
     body: JSON.stringify({
       playing: playing,
       muted: muted,
-      volume: volume,
       elapsed_time: time
     })
   }).then(resp => resp.json());
@@ -98,6 +78,5 @@ export default {
   getTheatre,
   updateTheatrePlaying,
   updateTheatreMute,
-  updateTheatreVolume,
   updateTheatreTime
 };

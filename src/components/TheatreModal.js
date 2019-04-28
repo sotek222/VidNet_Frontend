@@ -5,13 +5,20 @@ import { ActionCableConsumer } from "react-actioncable-provider";
 
 class TheatreModal extends React.Component {
   state = {
-    theatre: {}
+    theatre: {},
+    volume: 1,
+    played: 0,
+    duration: 0
   };
 
   componentDidMount() {
     let theatre_id = window.location.href.split("/").pop();
     adapter.getTheatre(theatre_id).then(theatre => this.setState({ theatre }));
   }
+
+  ref = player => {
+    this.player = player;
+  };
 
   handlePlayClick = () => {
     let theatre = this.state.theatre;
@@ -25,22 +32,53 @@ class TheatreModal extends React.Component {
     adapter.updateTheatreMute(theatre, muted);
   };
 
+  handleSliderChange = e => {
+    let volume = e.target.value / 100;
+    this.setState({ volume });
+  };
+
+  handleTimeChange = time => {
+    // when we have login set up, only the host will run this method
+    let theatre = this.state.theatre;
+    let currentTime = Math.ceil(time.playedSeconds);
+    adapter.updateTheatreTime(theatre, currentTime);
+  };
+
+  onSeekMouseDown = e => {
+    this.setState({ seeking: true });
+  };
+
+  onSeekChange = e => {
+    this.setState({ played: parseFloat(e.target.value) });
+  };
+
+  onSeekMouseUp = e => {
+    let currentTime = this.state.duration * this.state.played;
+    let theatre = this.state.theatre;
+
+    this.setState({ seeking: false });
+
+    this.player.seekTo(parseFloat(e.target.value));
+    adapter.updateTheatreTime(theatre, currentTime);
+  };
+
+  onDuration = duration => {
+    this.setState({ duration });
+  };
+
   handleConnected = () => {
     console.log("CONNECTED");
   };
 
   handleDisconnected = () => {
+    // when we have login when host disconnects
+    // or maybe hits a button, we will delete the video
     console.log("DISCONNECTED");
   };
 
   render() {
-    console.log(
-      "%c THE VIDEO SHOULD CURRENTLY BE PLAYING?",
-      "blue",
-      this.state.theatre.playing
-    );
-    let id = this.state.theatre.id;
-    let elapsed_time = this.state.theatre.elapsed_time;
+    let { id, elapsed_time } = this.state.theatre;
+
     return (
       <div className="modal">
         <ActionCableConsumer
@@ -56,37 +94,42 @@ class TheatreModal extends React.Component {
         />
         <h1>Video:</h1>
         <ReactPlayer
+          ref={this.ref}
           playing={this.state.theatre.playing}
           url={this.state.theatre.src}
-          volume={1}
+          volume={this.state.volume}
           muted={this.state.theatre.muted}
+          onDuration={this.onDuration}
           config={{
             youtube: {
               playerVars: { start: elapsed_time }
             }
           }}
         />
-        <button onClick={this.handlePlayClick}>Play/Pause</button>
-        <button onClick={this.handleMuteClick}>Mute/Unmute</button>
+        <div className="controls">
+          <input
+            type="range"
+            value={this.state.played}
+            onMouseDown={this.onSeekMouseDown}
+            onChange={this.onSeekChange}
+            onMouseUp={this.onSeekMouseUp}
+          />
+          <button onClick={this.handlePlayClick}>
+            {this.state.theatre.playing ? "Pause" : "Play"}
+          </button>
+          <button onClick={this.handleMuteClick}>
+            {this.state.theatre.muted ? "Unmute" : "Mute"}
+          </button>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={this.state.volume * 100}
+            onChange={this.handleSliderChange}
+          />
+        </div>
       </div>
     );
   }
 }
-
 export default TheatreModal;
-
-// if we set the state of the theatre in the backend what do we have to keep in mind?
-// 1. What we'll need to keep things synced, such as, if the video is paused,
-// the timestamp of the video, the volume?
-// 2. When the Component mounts we will get the video and the content in the react
-// player should have acces to the information.
-// 3. When we click a button, depending on which button we click, we will have to make
-// a patch request to the database, I wonder if it will cause sync issues.
-
-// To sync time:
-// in order for us to sync the time, we need to keep track of the elapsed time somehow
-// keeping the time stored in the model then whenever we come to the page it will grab the elapsed time.
-// example: elapsed_time: 50
-// every few moments (time in seconds i think, maybe another way) we send up
-// the new time. DONT DO ANYTHING WITH THE RESPONSE.
-// With this anytime the page is refreshed or a new user joins, they will be at the correct time.
