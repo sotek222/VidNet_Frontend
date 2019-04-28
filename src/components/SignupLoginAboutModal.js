@@ -3,6 +3,7 @@ import { Tab } from "semantic-ui-react";
 import Login from "./Login";
 import Signup from "./Signup";
 import About from "./About";
+import { withRouter } from "react-router-dom";
 
 class SignupLoginAboutModal extends React.Component {
   state = {};
@@ -50,4 +51,4 @@ class SignupLoginAboutModal extends React.Component {
   }
 }
 
-export default SignupLoginAboutModal;
+export default withRouter(SignupLoginAboutModal);

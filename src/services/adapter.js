@@ -1,11 +1,29 @@
 const API_URL = "http://localhost:4000/api/v1";
 
+const loginUser = (username, password) => {
+  return fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      user: {
+        username: username,
+        password: password
+      }
+    })
+  }).then(resp => resp.json());
+};
+
 // will need to take more args in the future when the host is known, etc.
 const createTheatre = url => {
+  let token = localStorage.getItem("user_token");
   return fetch(`${API_URL}/theatres`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
       // hardcoded host, privacy, and chats for now, the rest starts out like this.
@@ -73,10 +91,23 @@ const updateTheatreTime = (theatre, time) => {
   }).then(resp => resp.json());
 };
 
+const getUser = () => {
+  let token = localStorage.getItem("user_token");
+  return fetch("http://localhost:4000/api/v1/profile", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).then(resp => resp.json());
+};
+
 export default {
   createTheatre,
   getTheatre,
   updateTheatrePlaying,
   updateTheatreMute,
-  updateTheatreTime
+  updateTheatreTime,
+  loginUser,
+  getUser
 };
+// Someone without an account should only be able to: see a movie, and control a movie.
