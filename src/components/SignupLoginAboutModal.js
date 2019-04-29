@@ -24,7 +24,7 @@ class SignupLoginAboutModal extends React.Component {
         menuItem: "Signup",
         render: () => (
           <Tab.Pane>
-            <Signup />
+            <Signup handleSignUpSubmit={this.props.handleSignUpSubmit} />
           </Tab.Pane>
         )
       },

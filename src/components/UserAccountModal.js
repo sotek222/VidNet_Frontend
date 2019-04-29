@@ -1,5 +1,4 @@
 import React from "react";
-import adapter from "../services/adapter";
 import { withRouter } from "react-router-dom";
 
 class UserAccountModal extends React.Component {

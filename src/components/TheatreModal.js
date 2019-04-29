@@ -13,7 +13,11 @@ class TheatreModal extends React.Component {
 
   componentDidMount() {
     let theatre_id = window.location.href.split("/").pop();
-    adapter.getTheatre(theatre_id).then(theatre => this.setState({ theatre }));
+    adapter.getTheatre(theatre_id).then(theatre =>
+      this.setState({ theatre }, () => {
+        this.player.seekTo(this.state.theatre.elapsed_time);
+      })
+    );
   }
 
   ref = player => {
@@ -38,11 +42,12 @@ class TheatreModal extends React.Component {
   };
 
   handleTimeChange = time => {
-    // when we have login set up, only the host will run this method
     let theatre = this.state.theatre;
     let currentTime = Math.ceil(time.playedSeconds);
     adapter.updateTheatreTime(theatre, currentTime);
   };
+
+  handleFullscreenClick = () => {};
 
   onSeekMouseDown = e => {
     this.setState({ seeking: true });
@@ -66,16 +71,6 @@ class TheatreModal extends React.Component {
     this.setState({ duration });
   };
 
-  handleConnected = () => {
-    console.log("CONNECTED");
-  };
-
-  handleDisconnected = () => {
-    // when we have login when host disconnects
-    // or maybe hits a button, we will delete the video
-    console.log("DISCONNECTED");
-  };
-
   render() {
     let { id, elapsed_time } = this.state.theatre;
 
@@ -86,8 +81,8 @@ class TheatreModal extends React.Component {
             channel: "TheatreChannel",
             theatre_id: id
           }}
-          onConnected={this.handleConnected}
-          onDisconnected={this.handleDisconnected}
+          onConnected={() => console.log("%c CONNECTED", "color: green")}
+          onDisconnected={() => console.log("%c DISCONNECTED", "color: red")}
           onReceived={theatre => {
             this.setState({ theatre });
           }}
@@ -95,8 +90,8 @@ class TheatreModal extends React.Component {
         <h1>Video:</h1>
         <ReactPlayer
           ref={this.ref}
-          playing={this.state.theatre.playing}
           url={this.state.theatre.src}
+          playing={this.state.theatre.playing}
           volume={this.state.volume}
           muted={this.state.theatre.muted}
           onDuration={this.onDuration}
@@ -109,17 +104,12 @@ class TheatreModal extends React.Component {
         <div className="controls">
           <input
             type="range"
+            max={this.state.duration}
             value={this.state.played}
             onMouseDown={this.onSeekMouseDown}
             onChange={this.onSeekChange}
             onMouseUp={this.onSeekMouseUp}
           />
-          <button onClick={this.handlePlayClick}>
-            {this.state.theatre.playing ? "Pause" : "Play"}
-          </button>
-          <button onClick={this.handleMuteClick}>
-            {this.state.theatre.muted ? "Unmute" : "Mute"}
-          </button>
           <input
             type="range"
             min="0"
@@ -127,9 +117,25 @@ class TheatreModal extends React.Component {
             value={this.state.volume * 100}
             onChange={this.handleSliderChange}
           />
+          <button onClick={this.handlePlayClick}>
+            {this.state.theatre.playing ? "Pause" : "Play"}
+          </button>
+          <button onClick={this.handleFullscreenClick}>Fullscreen</button>
+          <button onClick={this.handleMuteClick}>
+            {this.state.theatre.muted ? "Unmute" : "Mute"}
+          </button>
         </div>
+        <h3>Sharable Link</h3>
+        <input readOnly value={window.location.href} />
       </div>
     );
   }
 }
 export default TheatreModal;
+
+// progress={500}
+// onProgress={
+//   this.state.theatre.host_id === this.props.user.id
+//     ? this.handleTimeChange
+//     : null
+// }

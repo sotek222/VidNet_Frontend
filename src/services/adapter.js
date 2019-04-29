@@ -125,6 +125,23 @@ const deleteUser = id => {
   });
 };
 
+const createUser = (username, email, image, password) => {
+  return fetch(`${API_URL}/users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      user: {
+        username: username,
+        email: email,
+        image: image,
+        password: password
+      }
+    })
+  }).then(resp => resp.json());
+};
+
 export default {
   createTheatre,
   getTheatre,
@@ -134,5 +151,6 @@ export default {
   loginUser,
   getUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  createUser
 };

@@ -1,5 +1,4 @@
 import React from "react";
-import adapter from "../services/adapter";
 
 class Login extends React.Component {
   state = {

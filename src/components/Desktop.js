@@ -46,6 +46,21 @@ class Desktop extends React.Component {
     });
   };
 
+  handleSignUpSubmit = userInfo => {
+    let { username, email, image, password } = userInfo;
+    debugger;
+    adapter.createUser(username, email, image, password).then(data => {
+      if (data.message) {
+        alert(data.message);
+        this.props.history.push("/signin");
+      } else {
+        this.setState({ user: data.user, logged_in: true });
+        localStorage.setItem("user_token", data.jwt);
+        this.props.history.push("/");
+      }
+    });
+  };
+
   handleLogout = () => {
     localStorage.removeItem("user_token");
     this.setState({ user: {}, logged_in: false }, () => {
@@ -81,16 +96,21 @@ class Desktop extends React.Component {
                 : () => (
                     <SignupLoginAboutModal
                       handleLoginSubmit={this.handleLoginSubmit}
+                      handleSignUpSubmit={this.handleSignUpSubmit}
                     />
                   )
             }
           />
-          <Route path="/theatre/:id" render={() => <TheatreModal />} />
+          <Route
+            path="/theatre/:id"
+            render={() => <TheatreModal user={this.state.user} />}
+          />
           <Route
             path="/theatre"
             render={() => (
               <TheatreCreationModal
                 loggedIn={this.state.logged_in}
+                user={this.state.user}
                 handleVideoSubmit={this.handleVideoSubmit}
               />
             )}
