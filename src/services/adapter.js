@@ -1,4 +1,5 @@
 const API_URL = "http://localhost:4000/api/v1";
+let token = localStorage.getItem("user_token");
 
 const loginUser = (username, password) => {
   return fetch(`${API_URL}/login`, {
@@ -17,8 +18,7 @@ const loginUser = (username, password) => {
 };
 
 // will need to take more args in the future when the host is known, etc.
-const createTheatre = url => {
-  let token = localStorage.getItem("user_token");
+const createTheatre = (url, id) => {
   return fetch(`${API_URL}/theatres`, {
     method: "POST",
     headers: {
@@ -26,9 +26,9 @@ const createTheatre = url => {
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
-      // hardcoded host, privacy, and chats for now, the rest starts out like this.
+      //  privacy, and chats for now, the rest starts out like this.
       theatre: {
-        host_id: 1,
+        host_id: id,
         src: url,
         text_chat: false,
         audio_chat: false,
@@ -92,13 +92,37 @@ const updateTheatreTime = (theatre, time) => {
 };
 
 const getUser = () => {
-  let token = localStorage.getItem("user_token");
-  return fetch("http://localhost:4000/api/v1/profile", {
+  return fetch(`${API_URL}/profile`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`
     }
   }).then(resp => resp.json());
+};
+
+const updateUser = (id, userInfo) => {
+  return fetch(`${API_URL}/users/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      image: userInfo.image,
+      email: userInfo.email,
+      location: userInfo.location
+    })
+  }).then(resp => resp.json());
+};
+
+const deleteUser = id => {
+  return fetch(`${API_URL}/users/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  });
 };
 
 export default {
@@ -108,6 +132,7 @@ export default {
   updateTheatreMute,
   updateTheatreTime,
   loginUser,
-  getUser
+  getUser,
+  updateUser,
+  deleteUser
 };
-// Someone without an account should only be able to: see a movie, and control a movie.

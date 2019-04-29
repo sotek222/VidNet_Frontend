@@ -5,6 +5,7 @@ import VideoRoomIcon from "../icons/VideoRoomIcon.png";
 import TheatreCreationModal from "./TheatreCreationModal";
 import TheatreModal from "./TheatreModal";
 import UserAccountModal from "./UserAccountModal";
+import UserEditAccount from "./UserEditAccount";
 import SignupLoginAboutModal from "./SignupLoginAboutModal";
 import adapter from "../services/adapter";
 import { Route, Switch, withRouter } from "react-router-dom";
@@ -26,7 +27,8 @@ class Desktop extends React.Component {
   }
 
   handleVideoSubmit = url => {
-    adapter.createTheatre(url).then(theatre => {
+    let userId = this.state.user.id;
+    adapter.createTheatre(url, userId).then(theatre => {
       this.props.history.push(`/theatre/${theatre.id}`);
     });
   };
@@ -51,6 +53,10 @@ class Desktop extends React.Component {
     });
   };
 
+  handleUserUpdate = user => {
+    this.setState({ user }, () => this.props.history.push("/user"));
+  };
+
   render() {
     console.log(
       "%c THE USER: ",
@@ -66,19 +72,6 @@ class Desktop extends React.Component {
     return (
       <div>
         <h1>V I D - N E T</h1>
-        <img
-          onClick={() => this.props.history.push("/theatre")}
-          src={VideoRoomIcon}
-          alt=""
-        />
-        <img
-          onClick={() => this.props.history.push("/user")}
-          src={AccountIcon}
-          alt=""
-        />
-        {this.state.logged_in ? (
-          <img onClick={this.handleLogout} src={LogoutIcon} alt="" />
-        ) : null}
         <Switch>
           <Route
             path="/signin"
@@ -97,7 +90,18 @@ class Desktop extends React.Component {
             path="/theatre"
             render={() => (
               <TheatreCreationModal
+                loggedIn={this.state.logged_in}
                 handleVideoSubmit={this.handleVideoSubmit}
+              />
+            )}
+          />
+          <Route
+            path="/user/edit"
+            render={() => (
+              <UserEditAccount
+                handleUserUpdate={this.handleUserUpdate}
+                loggedIn={this.state.logged_in}
+                user={this.state.user}
               />
             )}
           />
@@ -111,6 +115,20 @@ class Desktop extends React.Component {
             )}
           />
         </Switch>
+
+        <img
+          onClick={() => this.props.history.push("/theatre")}
+          src={VideoRoomIcon}
+          alt=""
+        />
+        <img
+          onClick={() => this.props.history.push("/user")}
+          src={AccountIcon}
+          alt=""
+        />
+        {this.state.logged_in ? (
+          <img onClick={this.handleLogout} src={LogoutIcon} alt="" />
+        ) : null}
       </div>
     );
   }

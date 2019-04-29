@@ -1,9 +1,17 @@
 import React from "react";
+import adapter from "../services/adapter";
+import { withRouter } from "react-router-dom";
 
 class TheatreCreationModal extends React.Component {
   state = {
     input: ""
   };
+
+  componentDidMount() {
+    if (!this.props.loggedIn) {
+      this.props.history.push("/signin");
+    }
+  }
 
   handleChange = e => {
     this.setState({ input: e.target.value });
@@ -26,4 +34,4 @@ class TheatreCreationModal extends React.Component {
   }
 }
 
-export default TheatreCreationModal;
+export default withRouter(TheatreCreationModal);
