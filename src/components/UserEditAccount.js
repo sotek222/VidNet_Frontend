@@ -1,6 +1,7 @@
 import React from "react";
 import adapter from "../services/adapter";
 import { withRouter } from "react-router-dom";
+import ModalTitle from "./ModalTitle";
 
 class UserEditAccount extends React.Component {
   state = {
@@ -40,6 +41,7 @@ class UserEditAccount extends React.Component {
   render() {
     return (
       <div className="modal">
+        <ModalTitle />
         <h1>Edit Account:</h1>
         <form>
           <h3>Image Url:</h3>

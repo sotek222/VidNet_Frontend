@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import ModalTitle from "./ModalTitle";
 
 class TheatreCreationModal extends React.Component {
   state = {
@@ -19,6 +20,7 @@ class TheatreCreationModal extends React.Component {
   render() {
     return (
       <div className="modal">
+        <ModalTitle />
         <h1>Paste a Video link below:</h1>
         <input
           onChange={this.handleChange}

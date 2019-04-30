@@ -1,14 +1,20 @@
 import React from "react";
-import ReactPlayer from "react-player";
-import adapter from "../services/adapter";
+import screenfull from "screenfull";
+import { findDOMNode } from "react-dom";
 import { ActionCableConsumer } from "react-actioncable-provider";
+import adapter from "../services/adapter";
+
+import Duration from "./Duration";
+import ReactPlayer from "react-player";
+import ModalTitle from "./ModalTitle";
 
 class TheatreModal extends React.Component {
   state = {
     theatre: {},
     volume: 1,
     played: 0,
-    duration: 0
+    duration: 0,
+    copied: false
   };
 
   componentDidMount() {
@@ -47,8 +53,6 @@ class TheatreModal extends React.Component {
     adapter.updateTheatreTime(theatre, currentTime);
   };
 
-  handleFullscreenClick = () => {};
-
   onSeekMouseDown = e => {
     this.setState({ seeking: true });
   };
@@ -58,17 +62,32 @@ class TheatreModal extends React.Component {
   };
 
   onSeekMouseUp = e => {
-    let currentTime = this.state.duration * this.state.played;
-    let theatre = this.state.theatre;
+    // let currentTime = this.state.duration * this.state.played;
+    // let theatre = this.state.theatre;
 
-    this.setState({ seeking: false });
+    this.setState({ seeking: false, played: parseFloat(e.target.value) });
 
     this.player.seekTo(parseFloat(e.target.value));
-    adapter.updateTheatreTime(theatre, currentTime);
+    // adapter.updateTheatreTime(theatre, currentTime);
   };
 
   onDuration = duration => {
     this.setState({ duration });
+  };
+
+  onClickFullscreen = () => {
+    screenfull.request(findDOMNode(this.player));
+  };
+
+  copyToClipboard = e => {
+    this.textArea.select();
+    document.execCommand("copy");
+    this.textArea.focus();
+    this.setState({ copied: true }, () => {
+      setTimeout(() => {
+        this.setState({ copied: false });
+      }, 2000);
+    });
   };
 
   render() {
@@ -76,6 +95,7 @@ class TheatreModal extends React.Component {
 
     return (
       <div className="modal">
+        <ModalTitle />
         <ActionCableConsumer
           channel={{
             channel: "TheatreChannel",
@@ -87,7 +107,6 @@ class TheatreModal extends React.Component {
             this.setState({ theatre });
           }}
         />
-        <h1>Video:</h1>
         <ReactPlayer
           ref={this.ref}
           url={this.state.theatre.src}
@@ -95,22 +114,34 @@ class TheatreModal extends React.Component {
           volume={this.state.volume}
           muted={this.state.theatre.muted}
           onDuration={this.onDuration}
+          onProgress={time =>
+            this.setState({ played: parseFloat(time.playedSeconds) })
+          }
           config={{
             youtube: {
               playerVars: { start: elapsed_time }
             }
           }}
         />
+        <Duration seconds={this.state.played} />
+        <progress max={this.state.duration} value={this.state.played} />
+        <Duration seconds={this.state.duration} />
         <div className="controls">
+          <label htmlFor="seek">Seek</label>
           <input
+            name="seek"
             type="range"
+            min={0}
             max={this.state.duration}
+            step="any"
             value={this.state.played}
             onMouseDown={this.onSeekMouseDown}
             onChange={this.onSeekChange}
             onMouseUp={this.onSeekMouseUp}
           />
+          <label htmlFor="volume">Volume</label>
           <input
+            name="volume"
             type="range"
             min="0"
             max="100"
@@ -120,22 +151,22 @@ class TheatreModal extends React.Component {
           <button onClick={this.handlePlayClick}>
             {this.state.theatre.playing ? "Pause" : "Play"}
           </button>
-          <button onClick={this.handleFullscreenClick}>Fullscreen</button>
+          <button onClick={this.onClickFullscreen}>Fullscreen</button>
           <button onClick={this.handleMuteClick}>
             {this.state.theatre.muted ? "Unmute" : "Mute"}
           </button>
         </div>
-        <h3>Sharable Link</h3>
-        <input readOnly value={window.location.href} />
+        <h3>Sharable Link:</h3>
+        <input
+          readOnly
+          ref={textarea => (this.textArea = textarea)}
+          value={window.location.href}
+        />
+        <button onClick={this.copyToClipboard}>
+          {this.state.copied ? "Copied!" : "copy"}
+        </button>
       </div>
     );
   }
 }
 export default TheatreModal;
-
-// progress={500}
-// onProgress={
-//   this.state.theatre.host_id === this.props.user.id
-//     ? this.handleTimeChange
-//     : null
-// }

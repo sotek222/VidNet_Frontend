@@ -1,9 +1,11 @@
 import React from "react";
 import { Tab } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
+
 import Login from "./Login";
 import Signup from "./Signup";
 import About from "./About";
-import { withRouter } from "react-router-dom";
+import ModalTitle from "./ModalTitle";
 
 class SignupLoginAboutModal extends React.Component {
   state = {};
@@ -15,7 +17,7 @@ class SignupLoginAboutModal extends React.Component {
       {
         menuItem: "Login",
         render: () => (
-          <Tab.Pane>
+          <Tab.Pane id="tab-modal">
             <Login handleLoginSubmit={this.props.handleLoginSubmit} />
           </Tab.Pane>
         )
@@ -23,7 +25,7 @@ class SignupLoginAboutModal extends React.Component {
       {
         menuItem: "Signup",
         render: () => (
-          <Tab.Pane>
+          <Tab.Pane id="tab-modal">
             <Signup handleSignUpSubmit={this.props.handleSignUpSubmit} />
           </Tab.Pane>
         )
@@ -31,7 +33,7 @@ class SignupLoginAboutModal extends React.Component {
       {
         menuItem: "About",
         render: () => (
-          <Tab.Pane>
+          <Tab.Pane id="tab-modal">
             <About />
           </Tab.Pane>
         )
@@ -43,9 +45,10 @@ class SignupLoginAboutModal extends React.Component {
     );
 
     return (
-      <div>
+      <div className="modal">
+        <ModalTitle />
         <h1>welcome</h1>
-        <Tab panes={panes} onTabChange={this.handleChange} />
+        <Tab id="tabs" panes={panes} onTabChange={this.handleChange} />
       </div>
     );
   }

@@ -1,6 +1,10 @@
 const API_URL = "http://localhost:4000/api/v1";
 let token = localStorage.getItem("user_token");
 
+const getUsers = () => {
+  return fetch(`${API_URL}/users`).then(resp => resp.json());
+};
+
 const loginUser = (username, password) => {
   return fetch(`${API_URL}/login`, {
     method: "POST",
@@ -17,7 +21,6 @@ const loginUser = (username, password) => {
   }).then(resp => resp.json());
 };
 
-// will need to take more args in the future when the host is known, etc.
 const createTheatre = (url, id) => {
   return fetch(`${API_URL}/theatres`, {
     method: "POST",
@@ -26,7 +29,7 @@ const createTheatre = (url, id) => {
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
-      //  privacy, and chats for now, the rest starts out like this.
+      //  hard coded privacy, and chats for now, the rest starts out like this.
       theatre: {
         host_id: id,
         src: url,
@@ -152,5 +155,6 @@ export default {
   getUser,
   updateUser,
   deleteUser,
-  createUser
+  createUser,
+  getUsers
 };

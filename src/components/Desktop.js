@@ -2,11 +2,13 @@ import React from "react";
 import AccountIcon from "../icons/AccountIcon.png";
 import LogoutIcon from "../icons/LogoutIcon.png";
 import VideoRoomIcon from "../icons/VideoRoomIcon.png";
+import UserSearchIcon from "../icons/UserSearchIcon.png";
 import TheatreCreationModal from "./TheatreCreationModal";
 import TheatreModal from "./TheatreModal";
 import UserAccountModal from "./UserAccountModal";
 import UserEditAccount from "./UserEditAccount";
 import SignupLoginAboutModal from "./SignupLoginAboutModal";
+import UserSearchModal from "./UserSearchModal";
 import adapter from "../services/adapter";
 import { Route, Switch, withRouter } from "react-router-dom";
 
@@ -85,7 +87,7 @@ class Desktop extends React.Component {
     );
 
     return (
-      <div>
+      <div className="desktop">
         <h1>V I D - N E T</h1>
         <Switch>
           <Route
@@ -134,11 +136,25 @@ class Desktop extends React.Component {
               />
             )}
           />
+          <Route
+            path="/search"
+            render={() => (
+              <UserSearchModal
+                loggedIn={this.state.logged_in}
+                user={this.state.user}
+              />
+            )}
+          />
         </Switch>
 
         <img
           onClick={() => this.props.history.push("/theatre")}
           src={VideoRoomIcon}
+          alt=""
+        />
+        <img
+          onClick={() => this.props.history.push("/search")}
+          src={UserSearchIcon}
           alt=""
         />
         <img

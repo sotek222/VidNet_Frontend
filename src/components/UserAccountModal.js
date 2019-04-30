@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import ModalTitle from "./ModalTitle";
 
 class UserAccountModal extends React.Component {
   componentDidMount() {
@@ -10,11 +11,9 @@ class UserAccountModal extends React.Component {
   render() {
     return (
       <div className="modal">
-        <div>
-          <button onClick={() => this.props.history.push("/")}>X</button>
-        </div>
+        <ModalTitle />
         <h1>Your Account:</h1>
-        <img src={this.props.user.image} alt="" />
+        <img className="user-icon" src={this.props.user.image} alt="" />
         <h3>Username:</h3>
         <h5>{this.props.user.username}</h5>
         <h3>Email:</h3>
