@@ -1,12 +1,38 @@
 import React from "react";
+import adapter from "../services/adapter";
 
-const UserCard = props => {
-  return (
-    <div>
-      <img className="user-icon" src={props.user.image} />
-      <h4>{props.user.username}</h4>
-    </div>
-  );
-};
+class UserCard extends React.Component {
+  handleAddClick = () => {
+    adapter.addFriend(this.props.currentUser.id, this.props.user.id);
+  };
+
+  handleRemoveClick = () => {
+    adapter.deleteFriendship(this.props.friendShip.id).then(user => {
+      this.props.handleDeleteFriend();
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <img
+          className="user-icon"
+          src={this.props.user.image}
+          alt="user icon"
+        />
+        <h4>{this.props.user.username}</h4>
+        <button
+          onClick={
+            this.props.isInFriends
+              ? this.handleRemoveClick
+              : this.handleAddClick
+          }
+        >
+          {this.props.isInFriends ? "Remove Friend" : "Add Friend"}
+        </button>
+      </div>
+    );
+  }
+}
 
 export default UserCard;

@@ -84,7 +84,8 @@ const updateTheatreTime = (theatre, time) => {
   return fetch(`${API_URL}/theatres/${id}`, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      seeking: "seeking"
     },
     body: JSON.stringify({
       playing: playing,
@@ -145,6 +146,40 @@ const createUser = (username, email, image, password) => {
   }).then(resp => resp.json());
 };
 
+const addFriend = (userId, friendId) => {
+  return fetch(`${API_URL}/friends`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      friender_id: userId,
+      friendee_id: friendId
+    })
+  }).then(resp => resp.json());
+};
+
+const getFriends = () => {
+  return fetch(`${API_URL}/friends`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  }).then(resp => resp.json());
+};
+
+const deleteFriendship = id => {
+  return fetch(`${API_URL}/friends/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  }).then(resp => resp.json());
+};
+
 export default {
   createTheatre,
   getTheatre,
@@ -156,5 +191,8 @@ export default {
   updateUser,
   deleteUser,
   createUser,
-  getUsers
+  getUsers,
+  addFriend,
+  getFriends,
+  deleteFriendship
 };

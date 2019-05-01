@@ -62,13 +62,13 @@ class TheatreModal extends React.Component {
   };
 
   onSeekMouseUp = e => {
-    // let currentTime = this.state.duration * this.state.played;
-    // let theatre = this.state.theatre;
+    let currentTime = e.target.value;
+    let theatre = this.state.theatre;
 
     this.setState({ seeking: false, played: parseFloat(e.target.value) });
 
     this.player.seekTo(parseFloat(e.target.value));
-    // adapter.updateTheatreTime(theatre, currentTime);
+    adapter.updateTheatreTime(theatre, currentTime);
   };
 
   onDuration = duration => {
@@ -104,10 +104,15 @@ class TheatreModal extends React.Component {
           onConnected={() => console.log("%c CONNECTED", "color: green")}
           onDisconnected={() => console.log("%c DISCONNECTED", "color: red")}
           onReceived={theatre => {
-            this.setState({ theatre });
+            if (theatre.time) {
+              this.player.seekTo(theatre.time);
+            } else {
+              this.setState({ theatre });
+            }
           }}
         />
         <ReactPlayer
+          className="player"
           ref={this.ref}
           url={this.state.theatre.src}
           playing={this.state.theatre.playing}

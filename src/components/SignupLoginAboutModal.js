@@ -40,9 +40,9 @@ class SignupLoginAboutModal extends React.Component {
       }
     ];
 
-    const TabExampleDefaultActiveIndex = () => (
-      <Tab panes={panes} defaultActiveIndex={0} />
-    );
+    // const TabExampleDefaultActiveIndex = () => (
+    //   <Tab panes={panes} defaultActiveIndex={0} />
+    // );
 
     return (
       <div className="modal">

@@ -24,10 +24,12 @@ class UserSearchModal extends React.Component {
 
   handleSearch = term => {
     const filteredUsers = this.state.users.filter(user => {
-      return user.username.includes(term);
+      return user.username.toLowerCase().includes(term.toLowerCase());
     });
-    this.setState({ filteredUsers: filteredUsers });
+    this.setState({ filteredUsers });
   };
+
+  handleUserClick = () => {};
 
   render() {
     return (
@@ -35,7 +37,10 @@ class UserSearchModal extends React.Component {
         <ModalTitle />
         <h1>Friends:</h1>
         <SearchBar handleSearch={this.handleSearch} />
-        <UsersContainer users={this.state.filteredUsers} />
+        <UsersContainer
+          currentUser={this.props.user}
+          users={this.state.filteredUsers}
+        />
       </div>
     );
   }

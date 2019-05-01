@@ -1,16 +1,20 @@
 import React from "react";
+import { Route, Switch, withRouter } from "react-router-dom";
+import adapter from "../services/adapter";
+
 import AccountIcon from "../icons/AccountIcon.png";
 import LogoutIcon from "../icons/LogoutIcon.png";
 import VideoRoomIcon from "../icons/VideoRoomIcon.png";
 import UserSearchIcon from "../icons/UserSearchIcon.png";
+import FriendsIcon from "../icons/FriendsIcon.png";
+
 import TheatreCreationModal from "./TheatreCreationModal";
 import TheatreModal from "./TheatreModal";
 import UserAccountModal from "./UserAccountModal";
 import UserEditAccount from "./UserEditAccount";
 import SignupLoginAboutModal from "./SignupLoginAboutModal";
 import UserSearchModal from "./UserSearchModal";
-import adapter from "../services/adapter";
-import { Route, Switch, withRouter } from "react-router-dom";
+import FriendsModal from "./FriendsModal";
 
 class Desktop extends React.Component {
   state = {
@@ -50,7 +54,7 @@ class Desktop extends React.Component {
 
   handleSignUpSubmit = userInfo => {
     let { username, email, image, password } = userInfo;
-    debugger;
+
     adapter.createUser(username, email, image, password).then(data => {
       if (data.message) {
         alert(data.message);
@@ -71,21 +75,11 @@ class Desktop extends React.Component {
   };
 
   handleUserUpdate = user => {
-    this.setState({ user }, () => this.props.history.push("/user"));
+    console.log(user);
+    this.setState({ user: user }, () => this.props.history.push("/user"));
   };
 
   render() {
-    console.log(
-      "%c THE USER: ",
-      "background: #000; border: inset grey 1px; color: white",
-      this.state.user
-    );
-    console.log(
-      "%c LOGGED IN?",
-      "background: #000; border: dotted green 1px; color: red; ",
-      this.state.logged_in
-    );
-
     return (
       <div className="desktop">
         <h1>V I D - N E T</h1>
@@ -145,6 +139,15 @@ class Desktop extends React.Component {
               />
             )}
           />
+          <Route
+            path="/friends"
+            render={() => (
+              <FriendsModal
+                loggedIn={this.state.logged_in}
+                user={this.state.user}
+              />
+            )}
+          />
         </Switch>
 
         <img
@@ -165,6 +168,11 @@ class Desktop extends React.Component {
         {this.state.logged_in ? (
           <img onClick={this.handleLogout} src={LogoutIcon} alt="" />
         ) : null}
+        <img
+          onClick={() => this.props.history.push("/friends")}
+          src={FriendsIcon}
+          alt=""
+        />
       </div>
     );
   }
