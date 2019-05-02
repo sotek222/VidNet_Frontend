@@ -4,9 +4,12 @@ import { findDOMNode } from "react-dom";
 import { ActionCableConsumer } from "react-actioncable-provider";
 import adapter from "../services/adapter";
 
+import AddFriendsIcon from "../icons/AddFriendsIcon.png";
+
 import Duration from "./Duration";
 import ReactPlayer from "react-player";
 import ModalTitle from "./ModalTitle";
+import FriendsPanel from "./FriendsPanel";
 
 class TheatreModal extends React.Component {
   state = {
@@ -14,7 +17,8 @@ class TheatreModal extends React.Component {
     volume: 1,
     played: 0,
     duration: 0,
-    copied: false
+    copied: false,
+    renderFriends: false
   };
 
   componentDidMount() {
@@ -92,7 +96,6 @@ class TheatreModal extends React.Component {
 
   render() {
     let { id, elapsed_time } = this.state.theatre;
-
     return (
       <div className="modal">
         <ModalTitle />
@@ -128,6 +131,7 @@ class TheatreModal extends React.Component {
             }
           }}
         />
+        <br />
         <Duration seconds={this.state.played} />
         <progress max={this.state.duration} value={this.state.played} />
         <Duration seconds={this.state.duration} />
@@ -170,6 +174,18 @@ class TheatreModal extends React.Component {
         <button onClick={this.copyToClipboard}>
           {this.state.copied ? "Copied!" : "copy"}
         </button>
+        {this.props.loggedIn ? (
+          <img
+            src={AddFriendsIcon}
+            alt=""
+            onClick={() =>
+              this.setState({ renderFriends: !this.state.renderFriends })
+            }
+          />
+        ) : null}
+        {this.state.renderFriends ? (
+          <FriendsPanel friends={this.props.user.friendees} />
+        ) : null}
       </div>
     );
   }

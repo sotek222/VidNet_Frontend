@@ -47,7 +47,7 @@ class SignupLoginAboutModal extends React.Component {
     return (
       <div className="modal">
         <ModalTitle />
-        <h1>welcome</h1>
+        <h1>Welcome</h1>
         <Tab id="tabs" panes={panes} onTabChange={this.handleChange} />
       </div>
     );

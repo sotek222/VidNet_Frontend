@@ -1,5 +1,6 @@
 import React from "react";
 import UserCard from "./UserCard";
+import HourGlassIcon from "../icons/HourGlassIcon.gif";
 
 const UsersContainer = props => {
   const users = props.users.map(userObj => {
@@ -13,7 +14,15 @@ const UsersContainer = props => {
     );
   });
 
-  return <div className="users-container">{users}</div>;
+  return (
+    <div className="users-container">
+      {users.length > 0 ? (
+        users
+      ) : (
+        <img className="hour-glass" src={HourGlassIcon} alt="" />
+      )}
+    </div>
+  );
 };
 
 export default UsersContainer;

@@ -7,13 +7,14 @@ import ModalTitle from "./ModalTitle";
 
 class FriendsModal extends React.Component {
   state = {
-    friends: []
+    friends: [],
+    filteredFriends: []
   };
 
   componentDidMount() {
     if (this.props.loggedIn) {
       adapter.getFriends().then(friendsArr => {
-        this.setState({ friends: friendsArr });
+        this.setState({ friends: friendsArr, filteredFriends: friendsArr });
       });
     } else {
       this.props.history.push("/signin");
@@ -26,16 +27,25 @@ class FriendsModal extends React.Component {
     });
   };
 
+  handleSearch = term => {
+    const filteredFriends = this.state.friends.filter(friend => {
+      return friend.friendee.username
+        .toLowerCase()
+        .includes(term.toLowerCase());
+    });
+    this.setState({ filteredFriends });
+  };
+
   render() {
     return (
       <div className="modal">
         <ModalTitle />
         <h1>Friends:</h1>
-        <SearchBar />
+        <SearchBar handleSearch={this.handleSearch} />
         <FriendsContainer
           handleDeleteFriend={this.handleDeleteFriend}
           currentUser={this.props.user}
-          friends={this.state.friends}
+          friends={this.state.filteredFriends}
           isInFriends={true}
         />
       </div>

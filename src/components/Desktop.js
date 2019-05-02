@@ -75,7 +75,6 @@ class Desktop extends React.Component {
   };
 
   handleUserUpdate = user => {
-    console.log(user);
     this.setState({ user: user }, () => this.props.history.push("/user"));
   };
 
@@ -99,7 +98,12 @@ class Desktop extends React.Component {
           />
           <Route
             path="/theatre/:id"
-            render={() => <TheatreModal user={this.state.user} />}
+            render={() => (
+              <TheatreModal
+                user={this.state.user}
+                loggedIn={this.state.logged_in}
+              />
+            )}
           />
           <Route
             path="/theatre"

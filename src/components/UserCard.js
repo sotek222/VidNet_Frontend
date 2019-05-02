@@ -21,15 +21,19 @@ class UserCard extends React.Component {
           alt="user icon"
         />
         <h4>{this.props.user.username}</h4>
-        <button
-          onClick={
-            this.props.isInFriends
-              ? this.handleRemoveClick
-              : this.handleAddClick
-          }
-        >
-          {this.props.isInFriends ? "Remove Friend" : "Add Friend"}
-        </button>
+        {this.props.isInPanel ? (
+          <button>send invitation</button>
+        ) : (
+          <button
+            onClick={
+              this.props.isInFriends
+                ? this.handleRemoveClick
+                : this.handleAddClick
+            }
+          >
+            {this.props.isInFriends ? "Remove Friend" : "Add Friend"}
+          </button>
+        )}
       </div>
     );
   }
