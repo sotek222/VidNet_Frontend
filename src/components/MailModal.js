@@ -1,27 +1,39 @@
 import React from "react";
+import { ActionCableConsumer } from "react-actioncable-provider";
 import { withRouter } from "react-router-dom";
 import ModalTitle from "./ModalTitle";
 import MailContainer from "./MailContainer";
 
 class MailModal extends React.Component {
+  state = {
+    messages: []
+  };
+
   componentDidMount() {
     if (!this.props.loggedIn) {
       this.props.history.push("/signin");
+    } else {
+      this.setState(
+        { messages: this.props.user.received_messages },
+        () => this.props.handleNewMessage
+      );
     }
   }
 
   render() {
-    console.log(
-      "HAVE I RECEIVED ANY MAIL?:",
-      this.props.user,
-      this.props.user.received_messages
-    );
-    const messages = this.props.user.received_messages;
+    let inboxId = window.location.href.split("/").pop();
+
     return (
       <div className="modal">
+        <ActionCableConsumer
+          channel={{ channel: "InboxChannel", inbox_id: inboxId }}
+          onReceived={message => {
+            this.setState({ messages: [...this.state.messages, message] });
+          }}
+        />
         <ModalTitle />
         <h1>MAIL:</h1>
-        <MailContainer messages={messages} />
+        <MailContainer messages={this.state.messages} />
       </div>
     );
   }

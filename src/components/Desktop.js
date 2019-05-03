@@ -21,7 +21,8 @@ import MailModal from "./MailModal";
 class Desktop extends React.Component {
   state = {
     user: {},
-    logged_in: false
+    logged_in: false,
+    newMessage: false
   };
 
   componentDidMount() {
