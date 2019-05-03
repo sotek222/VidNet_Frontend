@@ -77,7 +77,7 @@
 
 .users-container {
   background-color: white;
-  border: 3px outset gray;
+  border: 3px outset rgb(202, 198, 188);
 }
 
 .user-icon {
@@ -98,4 +98,8 @@
 .hour-glass {
   width: 64px;
   height: 64px;
+}
+
+.mail-card {
+  border: 5px outset rgb(180, 180, 180);
 }

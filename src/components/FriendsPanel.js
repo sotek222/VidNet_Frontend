@@ -10,7 +10,11 @@ class FriendsPanel extends React.Component {
       <div className="modal">
         <ModalTitle />
         <h1>Friends Panel:</h1>
-        <FriendsPanelContainer friends={this.props.friends} />
+        <FriendsPanelContainer
+          currentUser={this.props.currentUser}
+          loggedIn={this.props.loggedIn}
+          friends={this.props.friends}
+        />
       </div>
     );
   }

@@ -12,6 +12,13 @@ class UserCard extends React.Component {
     });
   };
 
+  handleInviteClick = () => {
+    let inboxId = this.props.user.id;
+    let senderId = this.props.currentUser.id;
+    let link = window.location.href;
+    adapter.createMessage(inboxId, senderId, link);
+  };
+
   render() {
     return (
       <div>
@@ -21,8 +28,8 @@ class UserCard extends React.Component {
           alt="user icon"
         />
         <h4>{this.props.user.username}</h4>
-        {this.props.isInPanel ? (
-          <button>send invitation</button>
+        {this.props.isInPanel && this.props.loggedIn ? (
+          <button onClick={this.handleInviteClick}>send invitation</button>
         ) : (
           <button
             onClick={

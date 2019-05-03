@@ -2,31 +2,31 @@ import React from "react";
 import UserCard from "./UserCard";
 import HourGlassIcon from "../icons/HourGlassIcon.gif";
 
-const FriendsContainer = props => {
-  const users = props.friends.map(friendShip => {
-    if (friendShip.friender_id === props.currentUser.id) {
-      return (
-        <UserCard
-          key={friendShip.friendee.id}
-          friendShip={friendShip}
-          user={friendShip.friendee}
-          currentUser={props.currentUser}
-          isInFriends={props.isInFriends}
-          handleDeleteFriend={props.handleDeleteFriend}
-        />
-      );
+class FriendsContainer extends React.Component {
+  renderFriends = () => {
+    const users = [];
+    if (this.props.friends) {
+      this.props.friends.forEach(friendShip => {
+        if (friendShip.friender_id === this.props.currentUser.id) {
+          users.push(
+            <UserCard
+              key={friendShip.friendee.id}
+              friendShip={friendShip}
+              user={friendShip.friendee}
+              currentUser={this.props.currentUser}
+              isInFriends={this.props.isInFriends}
+              handleDeleteFriend={this.props.handleDeleteFriend}
+            />
+          );
+        }
+      });
     }
-  });
+    return users;
+  };
 
-  return (
-    <div className="users-container">
-      {users.length > 0 ? (
-        users
-      ) : (
-        <img className="hour-glass" src={HourGlassIcon} alt="" />
-      )}
-    </div>
-  );
-};
+  render() {
+    return <div className="users-container">{this.renderFriends()}</div>;
+  }
+}
 
 export default FriendsContainer;

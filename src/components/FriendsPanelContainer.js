@@ -5,7 +5,15 @@ import HourGlassIcon from "../icons/HourGlassIcon.gif";
 class FriendsPanelContainer extends React.Component {
   render() {
     const friends = this.props.friends.map(friend => {
-      return <UserCard isInPanel={true} user={friend} />;
+      return (
+        <UserCard
+          key={friend.id}
+          currentUser={this.props.currentUser}
+          loggedIn={this.props.loggedIn}
+          isInPanel={true}
+          user={friend}
+        />
+      );
     });
 
     return (

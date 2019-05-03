@@ -18,7 +18,8 @@ class TheatreModal extends React.Component {
     played: 0,
     duration: 0,
     copied: false,
-    renderFriends: false
+    renderFriends: false,
+    connections: 0
   };
 
   componentDidMount() {
@@ -99,13 +100,18 @@ class TheatreModal extends React.Component {
     return (
       <div className="modal">
         <ModalTitle />
+        <h1>Number of Watchers: {this.state.connections}</h1>
         <ActionCableConsumer
           channel={{
             channel: "TheatreChannel",
             theatre_id: id
           }}
-          onConnected={() => console.log("%c CONNECTED", "color: green")}
-          onDisconnected={() => console.log("%c DISCONNECTED", "color: red")}
+          onConnected={() =>
+            this.setState({ connections: this.state.connections + 1 })
+          }
+          onDisconnected={() =>
+            this.setState({ connections: this.state.connections - 1 })
+          }
           onReceived={theatre => {
             if (theatre.time) {
               this.player.seekTo(theatre.time);
@@ -184,7 +190,11 @@ class TheatreModal extends React.Component {
           />
         ) : null}
         {this.state.renderFriends ? (
-          <FriendsPanel friends={this.props.user.friendees} />
+          <FriendsPanel
+            currentUser={this.props.user}
+            loggedIn={this.props.loggedIn}
+            friends={this.props.user.friendees}
+          />
         ) : null}
       </div>
     );

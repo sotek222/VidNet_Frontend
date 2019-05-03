@@ -7,6 +7,7 @@ import LogoutIcon from "../icons/LogoutIcon.png";
 import VideoRoomIcon from "../icons/VideoRoomIcon.png";
 import UserSearchIcon from "../icons/UserSearchIcon.png";
 import FriendsIcon from "../icons/FriendsIcon.png";
+import MailIcon from "../icons/MailIcon.png";
 
 import TheatreCreationModal from "./TheatreCreationModal";
 import TheatreModal from "./TheatreModal";
@@ -15,6 +16,7 @@ import UserEditAccount from "./UserEditAccount";
 import SignupLoginAboutModal from "./SignupLoginAboutModal";
 import UserSearchModal from "./UserSearchModal";
 import FriendsModal from "./FriendsModal";
+import MailModal from "./MailModal";
 
 class Desktop extends React.Component {
   state = {
@@ -116,6 +118,15 @@ class Desktop extends React.Component {
             )}
           />
           <Route
+            path="/user/inbox/:id"
+            render={() => (
+              <MailModal
+                user={this.state.user}
+                loggedIn={this.state.logged_in}
+              />
+            )}
+          />
+          <Route
             path="/user/edit"
             render={() => (
               <UserEditAccount
@@ -175,6 +186,17 @@ class Desktop extends React.Component {
         <img
           onClick={() => this.props.history.push("/friends")}
           src={FriendsIcon}
+          alt=""
+        />
+        <img
+          onClick={() => {
+            this.state.logged_in
+              ? this.props.history.push(
+                  `/user/inbox/${this.state.user.inbox.id}`
+                )
+              : this.props.history.push("/signin");
+          }}
+          src={MailIcon}
           alt=""
         />
       </div>
