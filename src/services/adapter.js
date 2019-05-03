@@ -21,7 +21,7 @@ const loginUser = (username, password) => {
   }).then(resp => resp.json());
 };
 
-const createTheatre = (url, id) => {
+const createTheatre = (theatreInfo, id) => {
   return fetch(`${API_URL}/theatres`, {
     method: "POST",
     headers: {
@@ -32,8 +32,8 @@ const createTheatre = (url, id) => {
       //  hard coded privacy, and chats for now, the rest starts out like this.
       theatre: {
         host_id: id,
-        src: url,
-        text_chat: false,
+        src: theatreInfo.url,
+        text_chat: theatreInfo.chatChecked,
         audio_chat: false,
         video_chat: false,
         is_public: true,

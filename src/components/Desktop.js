@@ -35,9 +35,9 @@ class Desktop extends React.Component {
     });
   }
 
-  handleVideoSubmit = url => {
+  handleVideoSubmit = theatreInfo => {
     let userId = this.state.user.id;
-    adapter.createTheatre(url, userId).then(theatre => {
+    adapter.createTheatre(theatreInfo, userId).then(theatre => {
       this.props.history.push(`/theatre/${theatre.id}`);
     });
   };

@@ -4,7 +4,8 @@ import ModalTitle from "./ModalTitle";
 
 class TheatreCreationModal extends React.Component {
   state = {
-    input: ""
+    url: "",
+    chatChecked: false
   };
 
   componentDidMount() {
@@ -14,7 +15,7 @@ class TheatreCreationModal extends React.Component {
   }
 
   handleChange = e => {
-    this.setState({ input: e.target.value });
+    this.setState({ url: e.target.value });
   };
 
   render() {
@@ -25,10 +26,19 @@ class TheatreCreationModal extends React.Component {
         <input
           onChange={this.handleChange}
           type="text"
-          value={this.state.input}
+          value={this.state.url}
         />
-        <button onClick={() => this.props.handleVideoSubmit(this.state.input)}>
-          Start a new session
+        <h3>Add Chat:</h3>
+        <input
+          onChange={() =>
+            this.setState({ chatChecked: !this.state.chatChecked })
+          }
+          type="checkbox"
+          checked={this.state.chatChecked}
+        />
+        <br />
+        <button onClick={() => this.props.handleVideoSubmit(this.state)}>
+          Create a new theatre
         </button>
       </div>
     );
