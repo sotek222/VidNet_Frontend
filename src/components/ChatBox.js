@@ -1,6 +1,7 @@
 import React from "react";
 import adapter from "../services/adapter";
 import { ActionCableConsumer } from "react-actioncable-provider";
+import Text from "./Text";
 
 class ChatBox extends React.Component {
   state = {
@@ -17,11 +18,7 @@ class ChatBox extends React.Component {
 
   renderTexts = () => {
     const texts = this.state.texts.map(text => {
-      return (
-        <p>
-          {text.sender.username}: {text.content}
-        </p>
-      );
+      return <Text sender={text.sender} text={text} />;
     });
     return texts;
   };
