@@ -6,7 +6,6 @@ import ModalTitle from "./ModalTitle";
 class UserEditAccount extends React.Component {
   state = {
     image: "",
-    location: "",
     email: ""
   };
 
@@ -14,8 +13,8 @@ class UserEditAccount extends React.Component {
     if (!this.props.loggedIn) {
       this.props.history.push("/signin");
     } else {
-      let { image, location, email } = this.props.user;
-      this.setState({ image, location, email });
+      let { image, email } = this.props.user;
+      this.setState({ image, email });
     }
   }
 
@@ -50,13 +49,6 @@ class UserEditAccount extends React.Component {
             type="text"
             name="image"
             value={this.state.image}
-          />
-          <h3>Location:</h3>
-          <input
-            onChange={this.handleChange}
-            type="text"
-            name="location"
-            value={this.state.location}
           />
           <h3>Email:</h3>
           <input

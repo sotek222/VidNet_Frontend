@@ -118,8 +118,7 @@ const updateUser = (id, userInfo) => {
     },
     body: JSON.stringify({
       image: userInfo.image,
-      email: userInfo.email,
-      location: userInfo.location
+      email: userInfo.email
     })
   }).then(resp => resp.json());
 };
