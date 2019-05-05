@@ -10,6 +10,7 @@ import Duration from "./Duration";
 import ReactPlayer from "react-player";
 import ModalTitle from "./ModalTitle";
 import FriendsPanel from "./FriendsPanel";
+import ChatBox from "./ChatBox";
 
 class TheatreModal extends React.Component {
   state = {
@@ -95,6 +96,7 @@ class TheatreModal extends React.Component {
   };
 
   render() {
+    console.log("DOES THE CHAT EXIST?", this.state.theatre.chat);
     let { id, elapsed_time } = this.state.theatre;
     return (
       <div className="modal">
@@ -189,6 +191,9 @@ class TheatreModal extends React.Component {
             loggedIn={this.props.loggedIn}
             friends={this.props.user.friendees}
           />
+        ) : null}
+        {this.state.theatre.text_chat && this.props.loggedIn ? (
+          <ChatBox chat={this.state.theatre.chat} user={this.props.user} />
         ) : null}
       </div>
     );

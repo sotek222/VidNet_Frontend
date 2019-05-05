@@ -1,5 +1,4 @@
 const API_URL = "http://localhost:4000/api/v1";
-let token = localStorage.getItem("user_token");
 
 const getUsers = () => {
   return fetch(`${API_URL}/users`).then(resp => resp.json());
@@ -22,6 +21,8 @@ const loginUser = (username, password) => {
 };
 
 const createTheatre = (theatreInfo, id) => {
+  let token = localStorage.getItem("user_token");
+
   return fetch(`${API_URL}/theatres`, {
     method: "POST",
     headers: {
@@ -96,6 +97,8 @@ const updateTheatreTime = (theatre, time) => {
 };
 
 const getUser = () => {
+  let token = localStorage.getItem("user_token");
+
   return fetch(`${API_URL}/profile`, {
     method: "GET",
     headers: {
@@ -105,6 +108,8 @@ const getUser = () => {
 };
 
 const updateUser = (id, userInfo) => {
+  let token = localStorage.getItem("user_token");
+
   return fetch(`${API_URL}/users/${id}`, {
     method: "PATCH",
     headers: {
@@ -120,6 +125,8 @@ const updateUser = (id, userInfo) => {
 };
 
 const deleteUser = id => {
+  let token = localStorage.getItem("user_token");
+
   return fetch(`${API_URL}/users/${id}`, {
     method: "DELETE",
     headers: {
@@ -147,6 +154,8 @@ const createUser = (username, email, image, password) => {
 };
 
 const addFriend = (userId, friendId) => {
+  let token = localStorage.getItem("user_token");
+
   return fetch(`${API_URL}/friends`, {
     method: "POST",
     headers: {
@@ -161,6 +170,7 @@ const addFriend = (userId, friendId) => {
 };
 
 const getFriends = () => {
+  let token = localStorage.getItem("user_token");
   return fetch(`${API_URL}/friends`, {
     method: "GET",
     headers: {
@@ -171,6 +181,8 @@ const getFriends = () => {
 };
 
 const deleteFriendship = id => {
+  let token = localStorage.getItem("user_token");
+
   return fetch(`${API_URL}/friends/${id}`, {
     method: "DELETE",
     headers: {
@@ -181,6 +193,8 @@ const deleteFriendship = id => {
 };
 
 const createMessage = (inboxId, senderId, link) => {
+  let token = localStorage.getItem("user_token");
+
   fetch(`${API_URL}/messages`, {
     method: "POST",
     headers: {
@@ -193,6 +207,34 @@ const createMessage = (inboxId, senderId, link) => {
         inbox_id: inboxId,
         link: link,
         content: "lets watch!"
+      }
+    })
+  }).then(resp => resp.json());
+};
+
+const getChat = chatId => {
+  let token = localStorage.getItem("user_token");
+
+  return fetch(`${API_URL}/chats/${chatId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  }).then(resp => resp.json());
+};
+
+const sendText = (userId, chatId, content) => {
+  return fetch(`${API_URL}/texts`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      text: {
+        user_id: userId,
+        chat_id: chatId,
+        content: content
       }
     })
   }).then(resp => resp.json());
@@ -213,5 +255,7 @@ export default {
   addFriend,
   getFriends,
   deleteFriendship,
-  createMessage
+  createMessage,
+  getChat,
+  sendText
 };

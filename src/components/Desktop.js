@@ -28,6 +28,7 @@ class Desktop extends React.Component {
   componentDidMount() {
     adapter.getUser().then(data => {
       if (data.message) {
+        console.log("I CANT LOG IN!");
         return;
       } else {
         this.setState({ user: data.user, logged_in: true });
