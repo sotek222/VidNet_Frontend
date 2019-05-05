@@ -96,11 +96,11 @@ class TheatreModal extends React.Component {
   };
 
   render() {
-    console.log("DOES THE CHAT EXIST?", this.state.theatre.chat);
-    let { id, elapsed_time } = this.state.theatre;
+    let { id, elapsed_time, title } = this.state.theatre;
     return (
       <div className="modal">
         <ModalTitle />
+        <h1>{title}</h1>
         <ActionCableConsumer
           channel={{
             channel: "TheatreChannel",

@@ -40,7 +40,8 @@ const createTheatre = (theatreInfo, id) => {
         is_public: true,
         playing: false,
         muted: false,
-        elapsed_time: 0
+        elapsed_time: 0,
+        title: theatreInfo.title
       }
     })
   }).then(resp => resp.json());

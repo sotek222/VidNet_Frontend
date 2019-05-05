@@ -4,6 +4,7 @@ import ModalTitle from "./ModalTitle";
 
 class TheatreCreationModal extends React.Component {
   state = {
+    title: "",
     url: "",
     chatChecked: false
   };
@@ -15,16 +16,24 @@ class TheatreCreationModal extends React.Component {
   }
 
   handleChange = e => {
-    this.setState({ url: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
     return (
       <div className="modal">
         <ModalTitle />
+        <h1>Name your theatre:</h1>
+        <input
+          onChange={this.handleChange}
+          name="title"
+          type="text"
+          value={this.state.title}
+        />
         <h1>Paste a Video link below:</h1>
         <input
           onChange={this.handleChange}
+          name="url"
           type="text"
           value={this.state.url}
         />
