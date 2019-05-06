@@ -8,6 +8,7 @@ import VideoRoomIcon from "../icons/VideoRoomIcon.png";
 import UserSearchIcon from "../icons/UserSearchIcon.png";
 import FriendsIcon from "../icons/FriendsIcon.png";
 import MailIcon from "../icons/MailIcon.png";
+import TheatreSearchIcon from "../icons/TheatreSearchIcon.png";
 
 import TheatreCreationModal from "./TheatreCreationModal";
 import TheatreModal from "./TheatreModal";
@@ -17,6 +18,7 @@ import SignupLoginAboutModal from "./SignupLoginAboutModal";
 import UserSearchModal from "./UserSearchModal";
 import FriendsModal from "./FriendsModal";
 import MailModal from "./MailModal";
+import TheatreBrowseModal from "./TheatreBrowseModal";
 
 class Desktop extends React.Component {
   state = {
@@ -100,6 +102,7 @@ class Desktop extends React.Component {
                   )
             }
           />
+          <Route path="/theatre/search" render={() => <TheatreBrowseModal />} />
           <Route
             path="/theatre/:id"
             render={() => (
@@ -200,6 +203,15 @@ class Desktop extends React.Component {
           }}
           src={MailIcon}
           alt=""
+        />
+        <img
+          src={TheatreSearchIcon}
+          alt=""
+          onClick={() => {
+            this.state.logged_in
+              ? this.props.history.push("/theatre/search")
+              : this.props.history.push("/signin");
+          }}
         />
       </div>
     );

@@ -6,7 +6,8 @@ class TheatreCreationModal extends React.Component {
   state = {
     title: "",
     url: "",
-    chatChecked: false
+    chatChecked: false,
+    public: false
   };
 
   componentDidMount() {
@@ -44,6 +45,12 @@ class TheatreCreationModal extends React.Component {
           }
           type="checkbox"
           checked={this.state.chatChecked}
+        />
+        <h3>Make Public?</h3>
+        <input
+          onChange={() => this.setState({ public: !this.state.public })}
+          type="checkbox"
+          checked={this.state.public}
         />
         <br />
         <button onClick={() => this.props.handleVideoSubmit(this.state)}>

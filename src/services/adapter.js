@@ -30,14 +30,13 @@ const createTheatre = (theatreInfo, id) => {
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
-      //  hard coded privacy, and chats for now, the rest starts out like this.
       theatre: {
         host_id: id,
         src: theatreInfo.url,
         text_chat: theatreInfo.chatChecked,
         audio_chat: false,
         video_chat: false,
-        is_public: true,
+        is_public: theatreInfo.public,
         playing: false,
         muted: false,
         elapsed_time: 0,
@@ -240,9 +239,14 @@ const sendText = (userId, chatId, content) => {
   }).then(resp => resp.json());
 };
 
+const getFilteredTheatres = () => {
+  return fetch(`${API_URL}/filtered`).then(resp => resp.json());
+};
+
 export default {
   createTheatre,
   getTheatre,
+  getFilteredTheatres,
   updateTheatrePlaying,
   updateTheatreMute,
   updateTheatreTime,
