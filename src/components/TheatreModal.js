@@ -116,23 +116,25 @@ class TheatreModal extends React.Component {
             }
           }}
         />
-        <ReactPlayer
-          className="player"
-          ref={this.ref}
-          url={this.state.theatre.src}
-          playing={this.state.theatre.playing}
-          volume={this.state.volume}
-          muted={this.state.theatre.muted}
-          onDuration={this.onDuration}
-          onProgress={time =>
-            this.setState({ played: parseFloat(time.playedSeconds) })
-          }
-          config={{
-            youtube: {
-              playerVars: { start: elapsed_time }
+        <div>
+          <ReactPlayer
+            className="player"
+            ref={this.ref}
+            url={this.state.theatre.src}
+            playing={this.state.theatre.playing}
+            volume={this.state.volume}
+            muted={this.state.theatre.muted}
+            onDuration={this.onDuration}
+            onProgress={time =>
+              this.setState({ played: parseFloat(time.playedSeconds) })
             }
-          }}
-        />
+            config={{
+              youtube: {
+                playerVars: { start: elapsed_time }
+              }
+            }}
+          />
+        </div>
         <br />
         <Duration seconds={this.state.played} />
         <progress max={this.state.duration} value={this.state.played} />

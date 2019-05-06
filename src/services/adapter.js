@@ -125,7 +125,6 @@ const updateUser = (id, userInfo) => {
 
 const deleteUser = id => {
   let token = localStorage.getItem("user_token");
-
   return fetch(`${API_URL}/users/${id}`, {
     method: "DELETE",
     headers: {

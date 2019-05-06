@@ -1,6 +1,7 @@
 import React from "react";
 import { Tab } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
+import Draggable from "react-draggable";
 
 import Login from "./Login";
 import Signup from "./Signup";
@@ -40,16 +41,14 @@ class SignupLoginAboutModal extends React.Component {
       }
     ];
 
-    // const TabExampleDefaultActiveIndex = () => (
-    //   <Tab panes={panes} defaultActiveIndex={0} />
-    // );
-
     return (
-      <div className="modal">
-        <ModalTitle />
-        <h1>Welcome</h1>
-        <Tab id="tabs" panes={panes} onTabChange={this.handleChange} />
-      </div>
+      <Draggable>
+        <div className="modal">
+          <ModalTitle />
+          <h1>Welcome</h1>
+          <Tab id="tabs" panes={panes} onTabChange={this.handleChange} />
+        </div>
+      </Draggable>
     );
   }
 }

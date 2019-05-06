@@ -5,6 +5,7 @@ import ModalTitle from "./ModalTitle";
 import FriendsPanelContainer from "./FriendsPanelContainer";
 
 class FriendsPanel extends React.Component {
+  // need to fetch from here to get users friends
   render() {
     return (
       <div className="modal">

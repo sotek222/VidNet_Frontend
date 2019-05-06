@@ -21,6 +21,7 @@ class UserAccountModal extends React.Component {
         <button onClick={() => this.props.history.push("/user/edit")}>
           Edit Account
         </button>
+        <button onClick={() => this.props.history.push("/")}>Exit</button>
       </div>
     );
   }
