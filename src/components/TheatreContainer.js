@@ -6,7 +6,7 @@ const TheatreContainer = props => {
     return <TheatreCard key={theatreObj.id} theatre={theatreObj} />;
   });
 
-  return <div className="users-container">{theatres}</div>;
+  return <div className="container">{theatres}</div>;
 };
 
 export default TheatreContainer;

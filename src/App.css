@@ -113,3 +113,14 @@
   margin-left: 45%;
   border-radius: 50%;
 }
+.container {
+  margin-left: auto;
+  width: 475px;
+  height: 350px;
+  overflow: auto;
+}
+.card {
+  border: solid black 1px;
+  height: 224px;
+  background: #fff;
+}
