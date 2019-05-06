@@ -1,7 +1,8 @@
 import React from "react";
-import { Tab } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import Draggable from "react-draggable";
+import { ThemeProvider } from "styled-components";
+import { themes, Window, WindowContent, Tab, Tabs, TabBody } from "react95";
 
 import Login from "./Login";
 import Signup from "./Signup";
@@ -9,46 +10,50 @@ import About from "./About";
 import ModalTitle from "./ModalTitle";
 
 class SignupLoginAboutModal extends React.Component {
-  state = {};
+  state = {
+    activeTab: 0
+  };
 
-  handleChange = (e, data) => this.setState(data);
+  handleChange = value => this.setState({ activeTab: value });
 
   render() {
-    const panes = [
-      {
-        menuItem: "Login",
-        render: () => (
-          <Tab.Pane id="tab-modal">
-            <Login handleLoginSubmit={this.props.handleLoginSubmit} />
-          </Tab.Pane>
-        )
-      },
-      {
-        menuItem: "Signup",
-        render: () => (
-          <Tab.Pane id="tab-modal">
-            <Signup handleSignUpSubmit={this.props.handleSignUpSubmit} />
-          </Tab.Pane>
-        )
-      },
-      {
-        menuItem: "About",
-        render: () => (
-          <Tab.Pane id="tab-modal">
-            <About />
-          </Tab.Pane>
-        )
-      }
-    ];
+    const { activeTab } = this.state;
 
     return (
-      <Draggable>
-        <div className="modal">
-          <ModalTitle />
-          <h1>Welcome</h1>
-          <Tab id="tabs" panes={panes} onTabChange={this.handleChange} />
-        </div>
-      </Draggable>
+      <ThemeProvider theme={themes.default}>
+        <Draggable cancel=".not-draggable">
+          <Window style={{ width: 500, height: 500, position: "absolute" }}>
+            <ModalTitle />
+            <WindowContent>
+              <h1>VidNet</h1>
+              <Tabs value={activeTab} onChange={this.handleChange}>
+                <Tab value={0}>Login</Tab>
+                <Tab value={1}>Signup</Tab>
+                <Tab value={2}>About</Tab>
+              </Tabs>
+              <div style={{ height: 350 }}>
+                {activeTab === 0 && (
+                  <TabBody>
+                    <Login handleLoginSubmit={this.props.handleLoginSubmit} />
+                  </TabBody>
+                )}
+                {activeTab === 1 && (
+                  <TabBody>
+                    <Signup
+                      handleSignUpSubmit={this.props.handleSignUpSubmit}
+                    />
+                  </TabBody>
+                )}
+                {activeTab === 2 && (
+                  <TabBody>
+                    <About />
+                  </TabBody>
+                )}
+              </div>
+            </WindowContent>
+          </Window>
+        </Draggable>
+      </ThemeProvider>
     );
   }
 }

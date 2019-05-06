@@ -8,11 +8,14 @@
     "react-dom": "^16.8.6",
     "react-draggable": "^3.3.0",
     "react-player": "^1.11.0",
+    "react-resizable": "^1.7.5",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
+    "react95": "^1.0.3",
     "screenfull": "^4.2.0",
-    "semantic-ui-react": "^0.86.0"
+    "semantic-ui-react": "^0.86.0",
+    "styled-components": "^4.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -53,6 +53,7 @@ class ChatBox extends React.Component {
         <div>{this.renderTexts()}</div>
         <form>
           <textarea
+            className="not-draggable"
             onChange={this.handleChange}
             name="textarea"
             value={this.state.textarea}

@@ -1,6 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import adapter from "../services/adapter";
+import Draggable from "react-draggable";
+
 import SearchBar from "./SearchBar";
 import FriendsContainer from "./FriendsContainer";
 import ModalTitle from "./ModalTitle";
@@ -38,17 +40,19 @@ class FriendsModal extends React.Component {
 
   render() {
     return (
-      <div className="modal">
-        <ModalTitle />
-        <h1>Friends:</h1>
-        <SearchBar handleSearch={this.handleSearch} />
-        <FriendsContainer
-          handleDeleteFriend={this.handleDeleteFriend}
-          currentUser={this.props.user}
-          friends={this.state.filteredFriends}
-          isInFriends={true}
-        />
-      </div>
+      <Draggable cancel=".not-draggable">
+        <div className="modal">
+          <ModalTitle />
+          <h1>Friends:</h1>
+          <SearchBar handleSearch={this.handleSearch} />
+          <FriendsContainer
+            handleDeleteFriend={this.handleDeleteFriend}
+            currentUser={this.props.user}
+            friends={this.state.filteredFriends}
+            isInFriends={true}
+          />
+        </div>
+      </Draggable>
     );
   }
 }

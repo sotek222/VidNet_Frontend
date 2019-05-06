@@ -1,4 +1,6 @@
 import React from "react";
+import { ThemeProvider } from "styled-components";
+import { themes, Button, WindowContent, Divider, TextField } from "react95";
 
 class Signup extends React.Component {
   state = {
@@ -19,40 +21,53 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>VidNet Signup</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="username">Username</label>
-          <input
-            onChange={this.handleChange}
-            type="text"
-            name="username"
-            value={this.state.username}
-          />
-          <label htmlFor="email">Email</label>
-          <input
-            onChange={this.handleChange}
-            type="email"
-            name="email"
-            value={this.state.email}
-          />
-          <label htmlFor="image">Profile Image Url</label>
-          <input
-            onChange={this.handleChange}
-            type="text"
-            name="image"
-            value={this.state.image}
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            onChange={this.handleChange}
-            type="password"
-            name="password"
-            value={this.state.password}
-          />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+      <ThemeProvider theme={themes.default}>
+        <WindowContent style={{ marginTop: -15 }}>
+          <h2>Please Signup</h2>
+          <Divider style={{ marginBottom: 10 }} />
+          <form onSubmit={this.handleSubmit}>
+            <label htmlFor="username">Username</label>
+            <TextField
+              className="not-draggable"
+              shadow={false}
+              onChange={this.handleChange}
+              type="text"
+              name="username"
+              value={this.state.username}
+            />
+            <label htmlFor="email">Email</label>
+            <TextField
+              className="not-draggable"
+              shadow={false}
+              onChange={this.handleChange}
+              type="email"
+              name="email"
+              value={this.state.email}
+            />
+            <label htmlFor="image">Profile Image Url</label>
+            <TextField
+              className="not-draggable"
+              shadow={false}
+              onChange={this.handleChange}
+              type="text"
+              name="image"
+              value={this.state.image}
+            />
+            <label htmlFor="password">Password</label>
+            <TextField
+              className="not-draggable"
+              shadow={false}
+              onChange={this.handleChange}
+              type="password"
+              name="password"
+              value={this.state.password}
+            />
+            <Button style={{ marginTop: 5 }} type="submit">
+              Submit
+            </Button>
+          </form>
+        </WindowContent>
+      </ThemeProvider>
     );
   }
 }

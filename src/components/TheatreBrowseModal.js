@@ -1,5 +1,6 @@
 import React from "react";
 import adapter from "../services/adapter";
+import Draggable from "react-draggable";
 
 import ModalTitle from "./ModalTitle";
 import TheatreContainer from "./TheatreContainer";
@@ -17,11 +18,13 @@ class TheatreBrowseModal extends React.Component {
 
   render() {
     return (
-      <div className="modal">
-        <ModalTitle />
-        <h1>Browse Public Theatre's:</h1>
-        <TheatreContainer theatres={this.state.filteredTheatres} />
-      </div>
+      <Draggable>
+        <div className="modal">
+          <ModalTitle />
+          <h1>Browse Public Theatre's:</h1>
+          <TheatreContainer theatres={this.state.filteredTheatres} />
+        </div>
+      </Draggable>
     );
   }
 }

@@ -17,6 +17,7 @@ class SearchBar extends React.Component {
       <div>
         <h1>Search for a user by Username:</h1>
         <input
+          className="not-draggable"
           onChange={this.handleChange}
           type="text"
           value={this.state.input}

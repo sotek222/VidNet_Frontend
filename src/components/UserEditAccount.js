@@ -1,5 +1,7 @@
 import React from "react";
 import adapter from "../services/adapter";
+import Draggable from "react-draggable";
+
 import { withRouter } from "react-router-dom";
 import ModalTitle from "./ModalTitle";
 
@@ -39,31 +41,35 @@ class UserEditAccount extends React.Component {
 
   render() {
     return (
-      <div className="modal">
-        <ModalTitle />
-        <h1>Edit Account:</h1>
-        <form>
-          <h3>Image Url:</h3>
-          <input
-            onChange={this.handleChange}
-            type="text"
-            name="image"
-            value={this.state.image}
-          />
-          <h3>Email:</h3>
-          <input
-            onChange={this.handleChange}
-            type="email"
-            name="email"
-            value={this.state.email}
-          />
-          <button onClick={this.handleSubmit} type="submit">
-            Submit
-          </button>
-        </form>
-        <button onClick={this.handleDeleteClick}>Delete Account</button>
-        <button onClick={() => this.props.history.push("/user")}>Exit</button>
-      </div>
+      <Draggable cancel=".not-draggable">
+        <div className="modal">
+          <ModalTitle />
+          <h1>Edit Account:</h1>
+          <form>
+            <h3>Image Url:</h3>
+            <input
+              className="not-draggable"
+              onChange={this.handleChange}
+              type="text"
+              name="image"
+              value={this.state.image}
+            />
+            <h3>Email:</h3>
+            <input
+              className="not-draggable"
+              onChange={this.handleChange}
+              type="email"
+              name="email"
+              value={this.state.email}
+            />
+            <button onClick={this.handleSubmit} type="submit">
+              Submit
+            </button>
+          </form>
+          <button onClick={this.handleDeleteClick}>Delete Account</button>
+          <button onClick={() => this.props.history.push("/user")}>Exit</button>
+        </div>
+      </Draggable>
     );
   }
 }

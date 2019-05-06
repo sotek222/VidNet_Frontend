@@ -3,6 +3,7 @@ import screenfull from "screenfull";
 import { findDOMNode } from "react-dom";
 import { ActionCableConsumer } from "react-actioncable-provider";
 import adapter from "../services/adapter";
+import Draggable from "react-draggable";
 
 import AddFriendsIcon from "../icons/AddFriendsIcon.png";
 
@@ -98,106 +99,108 @@ class TheatreModal extends React.Component {
   render() {
     let { id, elapsed_time, title } = this.state.theatre;
     return (
-      <div className="modal">
-        <ModalTitle />
-        <h1>{title} Theatre</h1>
-        <ActionCableConsumer
-          channel={{
-            channel: "TheatreChannel",
-            theatre_id: id
-          }}
-          onConnected={() => console.log("%cCONNECTED", "color: green")}
-          onDisconnected={() => console.log("%cDISCONNECTED", "color: red")}
-          onReceived={theatre => {
-            if (theatre.time) {
-              this.player.seekTo(theatre.time);
-            } else {
-              this.setState({ theatre });
-            }
-          }}
-        />
-        <div>
-          <ReactPlayer
-            className="player"
-            ref={this.ref}
-            url={this.state.theatre.src}
-            playing={this.state.theatre.playing}
-            volume={this.state.volume}
-            muted={this.state.theatre.muted}
-            onDuration={this.onDuration}
-            onProgress={time =>
-              this.setState({ played: parseFloat(time.playedSeconds) })
-            }
-            config={{
-              youtube: {
-                playerVars: { start: elapsed_time }
+      <Draggable cancel=".not-draggable">
+        <div className="modal">
+          <ModalTitle />
+          <h1>{title} Theatre</h1>
+          <ActionCableConsumer
+            channel={{
+              channel: "TheatreChannel",
+              theatre_id: id
+            }}
+            onConnected={() => console.log("%cCONNECTED", "color: green")}
+            onDisconnected={() => console.log("%cDISCONNECTED", "color: red")}
+            onReceived={theatre => {
+              if (theatre.time) {
+                this.player.seekTo(theatre.time);
+              } else {
+                this.setState({ theatre });
               }
             }}
           />
-        </div>
-        <br />
-        <Duration seconds={this.state.played} />
-        <progress max={this.state.duration} value={this.state.played} />
-        <Duration seconds={this.state.duration} />
-        <div className="controls">
-          <label htmlFor="seek">Seek</label>
+          <div>
+            <ReactPlayer
+              className="player"
+              ref={this.ref}
+              url={this.state.theatre.src}
+              playing={this.state.theatre.playing}
+              volume={this.state.volume}
+              muted={this.state.theatre.muted}
+              onDuration={this.onDuration}
+              onProgress={time =>
+                this.setState({ played: parseFloat(time.playedSeconds) })
+              }
+              config={{
+                youtube: {
+                  playerVars: { start: elapsed_time }
+                }
+              }}
+            />
+          </div>
+          <br />
+          <Duration seconds={this.state.played} />
+          <progress max={this.state.duration} value={this.state.played} />
+          <Duration seconds={this.state.duration} />
+          <div className="controls">
+            <label htmlFor="seek">Seek</label>
+            <input
+              name="seek"
+              type="range"
+              min={0}
+              max={this.state.duration}
+              step="any"
+              value={this.state.played}
+              onMouseDown={this.onSeekMouseDown}
+              onChange={this.onSeekChange}
+              onMouseUp={this.onSeekMouseUp}
+            />
+            <label htmlFor="volume">Volume</label>
+            <input
+              name="volume"
+              type="range"
+              min="0"
+              max="100"
+              value={this.state.volume * 100}
+              onChange={this.handleSliderChange}
+            />
+            <button onClick={this.handlePlayClick}>
+              {this.state.theatre.playing ? "Pause" : "Play"}
+            </button>
+            <button onClick={this.onClickFullscreen}>Fullscreen</button>
+            <button onClick={this.handleMuteClick}>
+              {this.state.theatre.muted ? "Unmute" : "Mute"}
+            </button>
+          </div>
+          <h3>Sharable Link:</h3>
           <input
-            name="seek"
-            type="range"
-            min={0}
-            max={this.state.duration}
-            step="any"
-            value={this.state.played}
-            onMouseDown={this.onSeekMouseDown}
-            onChange={this.onSeekChange}
-            onMouseUp={this.onSeekMouseUp}
+            readOnly
+            ref={textarea => (this.textArea = textarea)}
+            value={window.location.href}
           />
-          <label htmlFor="volume">Volume</label>
-          <input
-            name="volume"
-            type="range"
-            min="0"
-            max="100"
-            value={this.state.volume * 100}
-            onChange={this.handleSliderChange}
-          />
-          <button onClick={this.handlePlayClick}>
-            {this.state.theatre.playing ? "Pause" : "Play"}
+          <button onClick={this.copyToClipboard}>
+            {this.state.copied ? "Copied!" : "copy"}
           </button>
-          <button onClick={this.onClickFullscreen}>Fullscreen</button>
-          <button onClick={this.handleMuteClick}>
-            {this.state.theatre.muted ? "Unmute" : "Mute"}
-          </button>
+          {this.props.loggedIn ? (
+            <img
+              src={AddFriendsIcon}
+              alt=""
+              onClick={() =>
+                this.setState({ renderFriends: !this.state.renderFriends })
+              }
+            />
+          ) : null}
+          {this.state.renderFriends ? (
+            <FriendsPanel
+              currentUser={this.props.user}
+              loggedIn={this.props.loggedIn}
+              friends={this.props.user.friendees}
+            />
+          ) : null}
+          {this.state.theatre.text_chat && this.props.loggedIn ? (
+            <ChatBox chat={this.state.theatre.chat} user={this.props.user} />
+          ) : null}
         </div>
-        <h3>Sharable Link:</h3>
-        <input
-          readOnly
-          ref={textarea => (this.textArea = textarea)}
-          value={window.location.href}
-        />
-        <button onClick={this.copyToClipboard}>
-          {this.state.copied ? "Copied!" : "copy"}
-        </button>
-        {this.props.loggedIn ? (
-          <img
-            src={AddFriendsIcon}
-            alt=""
-            onClick={() =>
-              this.setState({ renderFriends: !this.state.renderFriends })
-            }
-          />
-        ) : null}
-        {this.state.renderFriends ? (
-          <FriendsPanel
-            currentUser={this.props.user}
-            loggedIn={this.props.loggedIn}
-            friends={this.props.user.friendees}
-          />
-        ) : null}
-        {this.state.theatre.text_chat && this.props.loggedIn ? (
-          <ChatBox chat={this.state.theatre.chat} user={this.props.user} />
-        ) : null}
-      </div>
+      </Draggable>
     );
   }
 }

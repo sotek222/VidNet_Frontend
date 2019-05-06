@@ -1,14 +1,22 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import { themes, WindowHeader, Button } from "react95";
 
 const ModalTitle = props => {
   return (
-    <div className="modal-title">
-      <h5 className="title">VidNet</h5>
-      <button className="modal-exit" onClick={() => props.history.push("/")}>
-        X
-      </button>
-    </div>
+    <ThemeProvider theme={themes.default}>
+      <WindowHeader>
+        VidNet.exe
+        <Button
+          square
+          style={{ float: "right", marginRight: -14 }}
+          onClick={() => props.history.push("/")}
+        >
+          x
+        </Button>
+      </WindowHeader>
+    </ThemeProvider>
   );
 };
 
