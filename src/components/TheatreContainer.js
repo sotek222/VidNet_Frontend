@@ -6,7 +6,11 @@ const TheatreContainer = props => {
     return <TheatreCard key={theatreObj.id} theatre={theatreObj} />;
   });
 
-  return <div className="container">{theatres}</div>;
+  return (
+    <div className="container" style={{ marginLeft: -6 }}>
+      {theatres}
+    </div>
+  );
 };
 
 export default TheatreContainer;

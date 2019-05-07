@@ -12,7 +12,7 @@ const TheatreCard = ({ theatre, history }) => {
       <h5>{theatre.host.username}</h5>
       <img className="icon" src={theatre.host.image} alt="" />
       <h4>Link:</h4>
-      <h5>http://localhost:3000/theatre/{theatre.id}</h5>
+      <h5>{`http://localhost:3000/theatre/${theatre.id}`}</h5>
     </div>
   );
 };

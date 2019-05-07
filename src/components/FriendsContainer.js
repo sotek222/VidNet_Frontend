@@ -1,6 +1,5 @@
 import React from "react";
 import UserCard from "./UserCard";
-import HourGlassIcon from "../icons/HourGlassIcon.gif";
 
 class FriendsContainer extends React.Component {
   renderFriends = () => {
@@ -25,7 +24,11 @@ class FriendsContainer extends React.Component {
   };
 
   render() {
-    return <div className="users-container">{this.renderFriends()}</div>;
+    return (
+      <div style={{ marginTop: 6 }} className="container">
+        {this.renderFriends()}
+      </div>
+    );
   }
 }
 

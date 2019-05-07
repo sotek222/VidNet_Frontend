@@ -7,7 +7,16 @@ const ModalTitle = props => {
   return (
     <ThemeProvider theme={themes.default}>
       <WindowHeader>
-        VidNet.exe
+        <h3
+          style={{
+            float: "left",
+            display: "inline",
+            marginTop: 5,
+            marginLeft: -10
+          }}
+        >
+          VidNet.exe
+        </h3>
         <Button
           square
           style={{ float: "right", marginRight: -14 }}

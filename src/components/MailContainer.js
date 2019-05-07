@@ -13,7 +13,11 @@ class MailContainer extends React.Component {
   };
 
   render() {
-    return <div>{this.renderMessages()}</div>;
+    return (
+      <div className="container" style={{ marginLeft: -6 }}>
+        {this.renderMessages()}
+      </div>
+    );
   }
 }
 

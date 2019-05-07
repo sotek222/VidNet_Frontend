@@ -121,10 +121,12 @@
   border-radius: 50%;
 }
 .container {
+  background-color: rgb(255, 255, 250);
   margin-left: auto;
   width: 475px;
   height: 350px;
   overflow: auto;
+  border: 3px inset rgb(180, 180, 180);
 }
 .card {
   border: solid black 1px;

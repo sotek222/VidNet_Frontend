@@ -2,6 +2,8 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import adapter from "../services/adapter";
 import Draggable from "react-draggable";
+import { ThemeProvider } from "styled-components";
+import { themes, Window, WindowContent, Divider } from "react95";
 
 import SearchBar from "./SearchBar";
 import ModalTitle from "./ModalTitle";
@@ -34,17 +36,22 @@ class UserSearchModal extends React.Component {
 
   render() {
     return (
-      <Draggable cancel=".not-draggable">
-        <div className="modal">
-          <ModalTitle />
-          <h1>Friends:</h1>
-          <SearchBar handleSearch={this.handleSearch} />
-          <UsersContainer
-            currentUser={this.props.user}
-            users={this.state.filteredUsers}
-          />
-        </div>
-      </Draggable>
+      <ThemeProvider theme={themes.default}>
+        <Draggable cancel=".not-draggable">
+          <Window style={{ width: 500, height: 550, position: "absolute" }}>
+            <ModalTitle />
+            <WindowContent>
+              <h1>User Lookup:</h1>
+              <Divider />
+              <SearchBar handleSearch={this.handleSearch} />
+              <UsersContainer
+                currentUser={this.props.user}
+                users={this.state.filteredUsers}
+              />
+            </WindowContent>
+          </Window>
+        </Draggable>
+      </ThemeProvider>
     );
   }
 }

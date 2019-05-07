@@ -1,4 +1,5 @@
 import React from "react";
+import { TextField } from "react95";
 
 class SearchBar extends React.Component {
   state = {
@@ -15,9 +16,11 @@ class SearchBar extends React.Component {
   render() {
     return (
       <div>
-        <h1>Search for a user by Username:</h1>
-        <input
+        <h3>Search by Username:</h3>
+        <TextField
+          style={{ marginTop: -6 }}
           className="not-draggable"
+          shadow={false}
           onChange={this.handleChange}
           type="text"
           value={this.state.input}

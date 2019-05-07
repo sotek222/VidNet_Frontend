@@ -3,13 +3,15 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import adapter from "../services/adapter";
 
 import AccountIcon from "../icons/AccountIcon.png";
-import LogoutIcon from "../icons/LogoutIcon.png";
 import VideoRoomIcon from "../icons/VideoRoomIcon.png";
 import UserSearchIcon from "../icons/UserSearchIcon.png";
 import FriendsIcon from "../icons/FriendsIcon.png";
 import MailIcon from "../icons/MailIcon.png";
 import TheatreSearchIcon from "../icons/TheatreSearchIcon.png";
+import startSound from "../sounds/StartUp.mp3";
+import downSound from "../sounds/Shutdown.mp3";
 
+import StartBar from "./StartBar";
 import TheatreCreationModal from "./TheatreCreationModal";
 import TheatreModal from "./TheatreModal";
 import UserAccountModal from "./UserAccountModal";
@@ -26,6 +28,9 @@ class Desktop extends React.Component {
     logged_in: false,
     newMessage: false
   };
+
+  startUp = new Audio(startSound);
+  shutDown = new Audio(downSound);
 
   componentDidMount() {
     adapter.getUser().then(data => {
@@ -54,6 +59,7 @@ class Desktop extends React.Component {
         this.setState({ user: data.user, logged_in: true });
         localStorage.setItem("user_token", data.jwt);
         this.props.history.push("/");
+        this.startUp.play();
       }
     });
   };
@@ -69,6 +75,7 @@ class Desktop extends React.Component {
         this.setState({ user: data.user, logged_in: true });
         localStorage.setItem("user_token", data.jwt);
         this.props.history.push("/");
+        this.startUp.play();
       }
     });
   };
@@ -77,6 +84,7 @@ class Desktop extends React.Component {
     localStorage.removeItem("user_token");
     this.setState({ user: {}, logged_in: false }, () => {
       this.props.history.push("/signin");
+      this.shutDown.play();
     });
   };
 
@@ -185,9 +193,6 @@ class Desktop extends React.Component {
           src={AccountIcon}
           alt=""
         />
-        {this.state.logged_in ? (
-          <img onClick={this.handleLogout} src={LogoutIcon} alt="" />
-        ) : null}
         <img
           onClick={() => this.props.history.push("/friends")}
           src={FriendsIcon}
@@ -212,6 +217,10 @@ class Desktop extends React.Component {
               ? this.props.history.push("/theatre/search")
               : this.props.history.push("/signin");
           }}
+        />
+        <StartBar
+          loggedIn={this.state.logged_in}
+          handleLogout={this.handleLogout}
         />
       </div>
     );

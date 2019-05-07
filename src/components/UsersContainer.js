@@ -15,7 +15,7 @@ const UsersContainer = props => {
   });
 
   return (
-    <div className="users-container">
+    <div style={{ marginTop: 6 }} className="container">
       {users.length > 0 ? (
         users
       ) : (
