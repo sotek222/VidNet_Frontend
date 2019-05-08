@@ -2,7 +2,7 @@ import React from "react";
 import adapter from "../services/adapter";
 import Draggable from "react-draggable";
 import { ThemeProvider } from "styled-components";
-import { themes, Window, WindowContent, Divider } from "react95";
+import { themes, Window, WindowContent } from "react95";
 
 import ModalTitle from "./ModalTitle";
 import TheatreContainer from "./TheatreContainer";

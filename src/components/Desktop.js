@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
+import { ActionCableConsumer } from "react-actioncable-provider";
 import adapter from "../services/adapter";
 
 import AccountIcon from "../icons/AccountIcon.png";
@@ -10,6 +11,7 @@ import MailIcon from "../icons/MailIcon.png";
 import TheatreSearchIcon from "../icons/TheatreSearchIcon.png";
 import startSound from "../sounds/StartUp.mp3";
 import downSound from "../sounds/Shutdown.mp3";
+import mailSound from "../sounds/youGotmail.mp3";
 
 import StartBar from "./StartBar";
 import TheatreCreationModal from "./TheatreCreationModal";
@@ -31,6 +33,7 @@ class Desktop extends React.Component {
 
   startUp = new Audio(startSound);
   shutDown = new Audio(downSound);
+  youGotMail = new Audio(mailSound);
 
   componentDidMount() {
     adapter.getUser().then(data => {
@@ -95,6 +98,12 @@ class Desktop extends React.Component {
   render() {
     return (
       <div className="desktop">
+        <ActionCableConsumer
+          channel={{ channel: "InboxChannel", inbox_id: this.state.user.id }}
+          onReceived={message => {
+            this.youGotMail.play();
+          }}
+        />
         <h1>V I D - N E T</h1>
         <Switch>
           <Route
@@ -177,47 +186,48 @@ class Desktop extends React.Component {
             )}
           />
         </Switch>
-
-        <img
-          onClick={() => this.props.history.push("/theatre")}
-          src={VideoRoomIcon}
-          alt=""
-        />
-        <img
-          onClick={() => this.props.history.push("/search")}
-          src={UserSearchIcon}
-          alt=""
-        />
-        <img
-          onClick={() => this.props.history.push("/user")}
-          src={AccountIcon}
-          alt=""
-        />
-        <img
-          onClick={() => this.props.history.push("/friends")}
-          src={FriendsIcon}
-          alt=""
-        />
-        <img
-          onClick={() => {
-            this.state.logged_in
-              ? this.props.history.push(
-                  `/user/inbox/${this.state.user.inbox.id}`
-                )
-              : this.props.history.push("/signin");
-          }}
-          src={MailIcon}
-          alt=""
-        />
-        <img
-          src={TheatreSearchIcon}
-          alt=""
-          onClick={() => {
-            this.state.logged_in
-              ? this.props.history.push("/theatre/search")
-              : this.props.history.push("/signin");
-          }}
-        />
+        <div>
+          <img
+            onClick={() => this.props.history.push("/theatre")}
+            src={VideoRoomIcon}
+            alt=""
+          />
+          <img
+            onClick={() => this.props.history.push("/search")}
+            src={UserSearchIcon}
+            alt=""
+          />
+          <img
+            onClick={() => this.props.history.push("/user")}
+            src={AccountIcon}
+            alt=""
+          />
+          <img
+            onClick={() => this.props.history.push("/friends")}
+            src={FriendsIcon}
+            alt=""
+          />
+          <img
+            onClick={() => {
+              this.state.logged_in
+                ? this.props.history.push(
+                    `/user/inbox/${this.state.user.inbox.id}`
+                  )
+                : this.props.history.push("/signin");
+            }}
+            src={MailIcon}
+            alt=""
+          />
+          <img
+            src={TheatreSearchIcon}
+            alt=""
+            onClick={() => {
+              this.state.logged_in
+                ? this.props.history.push("/theatre/search")
+                : this.props.history.push("/signin");
+            }}
+          />
+        </div>
         <StartBar
           loggedIn={this.state.logged_in}
           handleLogout={this.handleLogout}

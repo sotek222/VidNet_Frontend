@@ -20,9 +20,15 @@ const About = props => {
         </p>
         <h4 style={{ marginBottom: -2 }}>About the Developer:</h4>
         <p>
-          Matthew is a New York based Full Stack Web Developer, this is my
-          capstone project as part of the Flatiron school curriculum.
-          <a href="https://github.com/sotek222">Github</a>
+          Matthew is a New York based Full Stack Web Developer, this is his
+          capstone project as part of the Flatiron School curriculum.
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/sotek222"
+          >
+            Github
+          </a>
         </p>
       </WindowContent>
     </ThemeProvider>

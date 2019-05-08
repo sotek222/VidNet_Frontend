@@ -38,7 +38,13 @@ class UserSearchModal extends React.Component {
     return (
       <ThemeProvider theme={themes.default}>
         <Draggable cancel=".not-draggable">
-          <Window style={{ width: 500, height: 550, position: "absolute" }}>
+          <Window
+            style={{
+              width: 500,
+              height: 550,
+              position: "absolute"
+            }}
+          >
             <ModalTitle />
             <WindowContent>
               <h1>User Lookup:</h1>

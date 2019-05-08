@@ -238,8 +238,35 @@ const sendText = (userId, chatId, content) => {
   }).then(resp => resp.json());
 };
 
+const getUserFriends = userId => {
+  let token = localStorage.getItem("user_token");
+
+  return fetch(`${API_URL}/get_my_friends`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      user_id: userId
+    })
+  }).then(resp => resp.json());
+};
+
 const getFilteredTheatres = () => {
   return fetch(`${API_URL}/filtered`).then(resp => resp.json());
+};
+
+const deleteMessage = id => {
+  let token = localStorage.getItem("user_token");
+
+  return fetch(`${API_URL}/messages/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  }).then(resp => resp.json());
 };
 
 export default {
@@ -257,8 +284,10 @@ export default {
   getUsers,
   addFriend,
   getFriends,
+  getUserFriends,
   deleteFriendship,
   createMessage,
+  deleteMessage,
   getChat,
   sendText
 };

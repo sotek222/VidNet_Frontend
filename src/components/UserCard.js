@@ -1,5 +1,6 @@
 import React from "react";
 import adapter from "../services/adapter";
+import { TableRow, TableDataCell, Button } from "react95";
 
 class UserCard extends React.Component {
   handleAddClick = () => {
@@ -8,7 +9,7 @@ class UserCard extends React.Component {
 
   handleRemoveClick = () => {
     adapter.deleteFriendship(this.props.friendShip.id).then(user => {
-      this.props.handleDeleteFriend();
+      this.props.handleDeleteFriend(user.id);
     });
   };
 
@@ -20,28 +21,33 @@ class UserCard extends React.Component {
   };
 
   render() {
+    console.log("THE FRIENDS ID", this.props.user.id);
     return (
-      <div>
-        <img
-          className="user-icon"
-          src={this.props.user.image}
-          alt="user icon"
-        />
-        <h4>{this.props.user.username}</h4>
-        {this.props.isInPanel && this.props.loggedIn ? (
-          <button onClick={this.handleInviteClick}>send invitation</button>
-        ) : (
-          <button
-            onClick={
-              this.props.isInFriends
-                ? this.handleRemoveClick
-                : this.handleAddClick
-            }
-          >
-            {this.props.isInFriends ? "Remove Friend" : "Add Friend"}
-          </button>
-        )}
-      </div>
+      <TableRow>
+        <TableDataCell>
+          <div>
+            <img
+              className="user-icon"
+              src={this.props.user.image}
+              alt="user icon"
+            />
+            <h2>{this.props.user.username}</h2>
+            {this.props.isInPanel && this.props.loggedIn ? (
+              <Button onClick={this.handleInviteClick}>send invitation</Button>
+            ) : (
+              <Button
+                onClick={
+                  this.props.isInFriends
+                    ? this.handleRemoveClick
+                    : this.handleAddClick
+                }
+              >
+                {this.props.isInFriends ? "Remove Friend" : "Add Friend"}
+              </Button>
+            )}
+          </div>
+        </TableDataCell>
+      </TableRow>
     );
   }
 }

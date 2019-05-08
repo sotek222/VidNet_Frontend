@@ -25,9 +25,12 @@ class FriendsModal extends React.Component {
     }
   }
 
-  handleDeleteFriend = () => {
+  handleDeleteFriend = id => {
     adapter.getFriends().then(friendsArr => {
-      this.setState({ friends: friendsArr });
+      const friends = friendsArr.filter(friendObj => {
+        return friendObj.friendee.id !== id;
+      });
+      this.setState({ filteredFriends: friends });
     });
   };
 

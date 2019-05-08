@@ -7,7 +7,7 @@ class StartBar extends React.Component {
   render() {
     return (
       <ThemeProvider theme={themes.default}>
-        <AppBar style={{ top: 675 }}>
+        <AppBar style={{ top: "96%" }}>
           <Toolbar style={{ justifyContent: "space-between" }}>
             <Menu
               loggedIn={this.props.loggedIn}

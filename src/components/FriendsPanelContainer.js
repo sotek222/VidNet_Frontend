@@ -1,4 +1,5 @@
 import React from "react";
+import { Table, TableBody } from "react95";
 import UserCard from "./UserCard";
 import HourGlassIcon from "../icons/HourGlassIcon.gif";
 
@@ -17,9 +18,11 @@ class FriendsPanelContainer extends React.Component {
     });
 
     return (
-      <div className="users-container">
+      <div style={{ marginTop: 6 }} className="panel">
         {friends.length > 0 ? (
-          friends
+          <Table style={{ marginTop: 6 }}>
+            <TableBody>{friends}</TableBody>
+          </Table>
         ) : (
           <img className="hour-glass" src={HourGlassIcon} alt="" />
         )}

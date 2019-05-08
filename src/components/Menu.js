@@ -31,7 +31,13 @@ const Menu = props => {
           )}
           <Divider />
           <ListItem>
-            <a href="https://github.com/sotek222/VidNet_Frontend">Github</a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/sotek222/VidNet_Frontend"
+            >
+              Github
+            </a>
           </ListItem>
         </List>
       )}
