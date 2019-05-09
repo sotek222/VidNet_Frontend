@@ -12,13 +12,20 @@ import UsersContainer from "./UsersContainer";
 class UserSearchModal extends React.Component {
   state = {
     users: [],
-    filteredUsers: []
+    filteredUsers: [],
+    input: ""
   };
 
   componentDidMount() {
     if (this.props.loggedIn) {
       adapter.getUsers().then(users => {
-        this.setState({ users: users, filteredUsers: users });
+        const usersFilteredArr = users.filter(userObj => {
+          return userObj.id !== this.props.user.id;
+        });
+        this.setState({
+          users: usersFilteredArr,
+          filteredUsers: usersFilteredArr
+        });
       });
     } else {
       this.props.history.push("/signin");
@@ -32,7 +39,11 @@ class UserSearchModal extends React.Component {
     this.setState({ filteredUsers });
   };
 
-  handleUserClick = () => {};
+  handleChange = e => {
+    this.setState({ input: e.target.value }, () =>
+      this.handleSearch(this.state.input)
+    );
+  };
 
   render() {
     return (
@@ -49,7 +60,10 @@ class UserSearchModal extends React.Component {
             <WindowContent>
               <h1>User Lookup:</h1>
               <Divider />
-              <SearchBar handleSearch={this.handleSearch} />
+              <SearchBar
+                handleChange={this.handleChange}
+                input={this.state.input}
+              />
               <UsersContainer
                 currentUser={this.props.user}
                 users={this.state.filteredUsers}

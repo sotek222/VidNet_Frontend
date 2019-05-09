@@ -130,3 +130,34 @@
 .link {
   position: absolute;
 }
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+#logo {
+  margin-top: 3%;
+  margin-left: 50%;
+}
+
+#desktop-grid {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  grid-gap: 6%;
+  margin-left: 2%;
+}
+
+.theatre-icon {
+  margin-top: 17%;
+}
+
+.account-icon {
+  margin-top: 10%;
+  margin-left: 5%;
+}

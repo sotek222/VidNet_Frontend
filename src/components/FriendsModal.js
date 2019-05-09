@@ -43,6 +43,12 @@ class FriendsModal extends React.Component {
     this.setState({ filteredFriends });
   };
 
+  handleChange = e => {
+    this.setState({ input: e.target.value }, () =>
+      this.handleSearch(this.state.input)
+    );
+  };
+
   render() {
     return (
       <ThemeProvider theme={themes.default}>
@@ -52,7 +58,7 @@ class FriendsModal extends React.Component {
             <WindowContent>
               <h1>Friends Lookup:</h1>
               <Divider />
-              <SearchBar handleSearch={this.handleSearch} />
+              <SearchBar handleChange={this.handleChange} />
               <FriendsContainer
                 handleDeleteFriend={this.handleDeleteFriend}
                 currentUser={this.props.user}

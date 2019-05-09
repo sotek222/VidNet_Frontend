@@ -3,6 +3,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import { ActionCableConsumer } from "react-actioncable-provider";
 import adapter from "../services/adapter";
 
+import logo from "../icons/logo.png";
 import AccountIcon from "../icons/AccountIcon.png";
 import VideoRoomIcon from "../icons/VideoRoomIcon.png";
 import UserSearchIcon from "../icons/UserSearchIcon.png";
@@ -104,7 +105,7 @@ class Desktop extends React.Component {
             this.youGotMail.play();
           }}
         />
-        <h1>V I D - N E T</h1>
+        <img id="logo" src={logo} alt="" />
         <Switch>
           <Route
             path="/signin"
@@ -186,7 +187,7 @@ class Desktop extends React.Component {
             )}
           />
         </Switch>
-        <div>
+        <div id="desktop-grid">
           <img
             onClick={() => this.props.history.push("/theatre")}
             src={VideoRoomIcon}
@@ -198,6 +199,7 @@ class Desktop extends React.Component {
             alt=""
           />
           <img
+            className="account-icon"
             onClick={() => this.props.history.push("/user")}
             src={AccountIcon}
             alt=""
@@ -219,6 +221,7 @@ class Desktop extends React.Component {
             alt=""
           />
           <img
+            className="theatre-icon"
             src={TheatreSearchIcon}
             alt=""
             onClick={() => {
