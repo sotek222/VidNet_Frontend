@@ -2,7 +2,7 @@ import React from "react";
 import adapter from "../services/adapter";
 import error from "../sounds/Error.mp3";
 import success from "../sounds/Success.mp3";
-import { TableRow, TableDataCell, Button } from "react95";
+import { Button, Divider, WindowHeader } from "react95";
 
 class UserCard extends React.Component {
   state = {
@@ -62,9 +62,10 @@ class UserCard extends React.Component {
 
   render() {
     return (
-      <TableRow>
-        <TableDataCell>
+      <tr>
+        <td className="user-card">
           <div>
+            <WindowHeader>{this.props.user.username}.exe</WindowHeader>
             {this.state.friend ? (
               <h3
                 className="blink_me"
@@ -95,15 +96,19 @@ class UserCard extends React.Component {
               </h3>
             ) : null}
             <img
-              className="user-icon"
+              className={this.props.isInPanel ? "panel-user-icon" : "user-icon"}
               src={this.props.user.image}
               alt="user icon"
             />
             <h2>{this.props.user.username}</h2>
+            <Divider />
             {this.props.isInPanel && this.props.loggedIn ? (
-              <Button onClick={this.handleInviteClick}>send invitation</Button>
+              <Button fullWidth onClick={this.handleInviteClick}>
+                send invitation
+              </Button>
             ) : (
               <Button
+                fullWidth
                 onClick={
                   this.props.isInFriends
                     ? this.handleRemoveClick
@@ -114,8 +119,8 @@ class UserCard extends React.Component {
               </Button>
             )}
           </div>
-        </TableDataCell>
-      </TableRow>
+        </td>
+      </tr>
     );
   }
 }

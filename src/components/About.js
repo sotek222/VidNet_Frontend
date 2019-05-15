@@ -12,7 +12,7 @@ const About = props => {
         <img className="me-icon" src={Me} alt="Me" />
         <p>
           VidNet is a website for watching videos with your friends. Vidnet
-          allows for sharing of youtube, dailymotion, soundcloud and more!
+          allows for sharing of Youtube, Dailymotion, Soundcloud and more!
         </p>
         <p>
           Aesthetically the website is designed with a certain operating system

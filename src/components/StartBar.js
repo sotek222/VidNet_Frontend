@@ -1,6 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { themes, AppBar, Toolbar } from "react95";
+import { themes, AppBar, Toolbar, Cutout } from "react95";
 import Menu from "./Menu";
 
 class StartBar extends React.Component {
@@ -13,6 +13,9 @@ class StartBar extends React.Component {
               loggedIn={this.props.loggedIn}
               handleLogout={this.props.handleLogout}
             />
+            <Cutout style={{ absolute: "absolute", marginRight: "1%" }}>
+              <p>Vid-Net.exe</p>
+            </Cutout>
           </Toolbar>
         </AppBar>
       </ThemeProvider>

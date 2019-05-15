@@ -5,30 +5,17 @@ import { ActionCableConsumer } from "react-actioncable-provider";
 import adapter from "../services/adapter";
 import Draggable from "react-draggable";
 import { ThemeProvider } from "styled-components";
-import {
-  themes,
-  Button,
-  Window,
-  WindowContent,
-  Fieldset,
-  Tooltip
-} from "react95";
+import { themes, Button, Window, WindowContent, Tooltip } from "react95";
 
 import AddFriendsIcon from "../icons/AddFriendsIcon.png";
-import play from "../icons/controller/play.png";
-import pause from "../icons/controller/pause.png";
 import maximize from "../icons/controller/maximize.png";
-import unmute from "../icons/controller/unmute.png";
-import mute from "../icons/controller/mute.png";
-import volume from "../icons/controller/volume.png";
-import forwardSeek from "../icons/controller/forwardseek.png";
-import backSeek from "../icons/controller/backseek.png";
 
 import Duration from "./Duration";
 import ReactPlayer from "react-player";
 import ModalTitle from "./ModalTitle";
 import FriendsPanel from "./FriendsPanel";
 import ChatBox from "./ChatBox";
+import Controls from "./Controls";
 
 class TheatreModal extends React.Component {
   state = {
@@ -145,7 +132,8 @@ class TheatreModal extends React.Component {
               width: 700,
               height: 675,
               position: "absolute",
-              bottom: "6.5%"
+              bottom: "4.5%",
+              left: "24.5%"
             }}
           >
             <ModalTitle />
@@ -204,52 +192,15 @@ class TheatreModal extends React.Component {
                 onChange={this.onSeekChange}
                 onMouseUp={this.onSeekMouseUp}
               />
-              <Fieldset>
-                <div className="controls">
-                  <Button
-                    style={{ display: "inline-grid" }}
-                    onClick={this.onSeekBackward}
-                  >
-                    <img src={backSeek} alt="" />
-                  </Button>
-                  <Button
-                    style={{ display: "inline-grid" }}
-                    onClick={this.handlePlayClick}
-                  >
-                    {this.state.theatre.playing ? (
-                      <img src={pause} alt="" />
-                    ) : (
-                      <img src={play} alt="" />
-                    )}
-                  </Button>
-                  <Button
-                    style={{ display: "inline-grid" }}
-                    onClick={this.handleMuteClick}
-                  >
-                    {this.state.theatre.muted ? (
-                      <img src={mute} alt="" />
-                    ) : (
-                      <img src={unmute} alt="" />
-                    )}
-                  </Button>
-                  <Button
-                    style={{ display: "inline-grid" }}
-                    onClick={this.onSeekForward}
-                  >
-                    <img src={forwardSeek} alt="" />
-                  </Button>
-                  <img src={volume} alt="" />
-                  <input
-                    name="volume"
-                    className="not-draggable"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={this.state.volume * 100}
-                    onChange={this.handleSliderChange}
-                  />
-                </div>
-              </Fieldset>
+              <Controls
+                theatre={this.state.theatre}
+                onSeekBackward={this.onSeekBackward}
+                handlePlayClick={this.handlePlayClick}
+                handleMuteClick={this.handleMuteClick}
+                onSeekForward={this.onSeekForward}
+                volume={this.state.volume}
+                handleSliderChange={this.handleSliderChange}
+              />
               <div className="link">
                 <h3>Sharable Link:</h3>
                 <input
