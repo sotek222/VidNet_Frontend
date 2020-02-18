@@ -150,6 +150,8 @@ class TheatreModal extends React.Component {
                   channel: "TheatreChannel",
                   theatre_id: id
                 }}
+                onConnected={() => console.log("CONNECTED")}
+                onDisconnected={() => console.log("DISCONNECTED")}
                 onReceived={theatre => {
                   if (theatre.time) {
                     this.player.seekTo(theatre.time);
@@ -175,6 +177,7 @@ class TheatreModal extends React.Component {
                   }
                 }}
               />
+              {/* The below input JSX can be moved into another component*/}
               <br />
               <Duration seconds={this.state.played} />
               <progress max={this.state.duration} value={this.state.played} />
@@ -201,6 +204,7 @@ class TheatreModal extends React.Component {
                 volume={this.state.volume}
                 handleSliderChange={this.handleSliderChange}
               />
+              {/* The below input JSX can be moved into another component*/}
               <div className="link">
                 <h3>Sharable Link:</h3>
                 <input

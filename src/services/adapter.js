@@ -1,4 +1,5 @@
 const API_URL = "http://localhost:4000/api/v1";
+// const API_URL = "https://vid-net-api.localtunnel.me/api/v1";
 
 const getUsers = () => {
   return fetch(`${API_URL}/users`).then(resp => resp.json());
