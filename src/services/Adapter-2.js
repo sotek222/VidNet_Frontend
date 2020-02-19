@@ -6,12 +6,17 @@ class APICommunicator {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     };
-
     this.authHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      ...this.headers,
       Authorization: `Bearer ${this.token}`
     };
+
+    this.fetchOptions = function(httpVerb = 'GET', auth = false){
+      return {
+        method: httpVerb,
+        headers: auth ? this.authHeaders : this.headers
+      }
+    }
   }
 
   getUsers() {
@@ -19,10 +24,7 @@ class APICommunicator {
   }
 
   getUser() {
-    return fetch(`${this.endpoint}/profile`, {
-      method: 'GET',
-      headers: this.authHeaders
-    }).then(response => response.json());
+    return fetch(`${this.endpoint}/profile`, this.fetchOptions('GET', true)).then(response => response.json());
   }
 
 }
