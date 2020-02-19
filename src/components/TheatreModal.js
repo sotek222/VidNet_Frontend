@@ -28,8 +28,9 @@ class TheatreModal extends React.Component {
   };
 
   componentDidMount() {
-    let theatre_id = window.location.href.split("/").pop();
-    adapter.getTheatre(theatre_id).then(theatre =>
+    const theatre_id = window.location.href.split("/").pop();
+    
+    this.props.adapter.getTheatre(theatre_id).then(theatre => 
       this.setState({ theatre }, () => {
         this.player.seekTo(this.state.theatre.elapsed_time);
       })
