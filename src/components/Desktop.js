@@ -122,6 +122,7 @@ class Desktop extends React.Component {
               <TheatreModal
                 user={this.state.user}
                 loggedIn={this.state.logged_in}
+                adapter={this.props.adapter}
               />
             )}
           />
