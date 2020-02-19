@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { ActionCableConsumer } from "react-actioncable-provider";
-import adapter from "../services/adapter";
 
 import startSound from "../sounds/StartUp.mp3";
 import downSound from "../sounds/Shutdown.mp3";
