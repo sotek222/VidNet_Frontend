@@ -21,31 +21,31 @@ const API_URL = "http://localhost:4000/api/v1";
 //   }).then(resp => resp.json());
 // };
 
-const createTheatre = (theatreInfo, id) => {
-  let token = localStorage.getItem("user_token");
+// const createTheatre = (theatreInfo, id) => {
+//   let token = localStorage.getItem("user_token");
 
-  return fetch(`${API_URL}/theatres`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      theatre: {
-        host_id: id,
-        src: theatreInfo.url,
-        text_chat: theatreInfo.chatChecked,
-        audio_chat: false,
-        video_chat: false,
-        is_public: theatreInfo.public,
-        playing: false,
-        muted: false,
-        elapsed_time: 0,
-        title: theatreInfo.title
-      }
-    })
-  }).then(resp => resp.json());
-};
+//   return fetch(`${API_URL}/theatres`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`
+//     },
+//     body: JSON.stringify({
+//       theatre: {
+//         host_id: id,
+//         src: theatreInfo.url,
+//         text_chat: theatreInfo.chatChecked,
+//         audio_chat: false,
+//         video_chat: false,
+//         is_public: theatreInfo.public,
+//         playing: false,
+//         muted: false,
+//         elapsed_time: 0,
+//         title: theatreInfo.title
+//       }
+//     })
+//   }).then(resp => resp.json());
+// };
 
 const getTheatre = id => {
   return fetch(`${API_URL}/theatres/${id}`).then(resp => resp.json());
@@ -135,22 +135,22 @@ const deleteUser = id => {
   });
 };
 
-const createUser = (username, email, image, password) => {
-  return fetch(`${API_URL}/users`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      user: {
-        username: username,
-        email: email,
-        image: image,
-        password: password
-      }
-    })
-  }).then(resp => resp.json());
-};
+// const createUser = (username, email, image, password) => {
+//   return fetch(`${API_URL}/users`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       user: {
+//         username: username,
+//         email: email,
+//         image: image,
+//         password: password
+//       }
+//     })
+//   }).then(resp => resp.json());
+// };
 
 const addFriend = (userId, friendId) => {
   let token = localStorage.getItem("user_token");
@@ -271,7 +271,7 @@ const deleteMessage = id => {
 };
 
 export default {
-  createTheatre,
+  // createTheatre,
   getTheatre,
   getFilteredTheatres,
   updateTheatrePlaying,
@@ -281,7 +281,7 @@ export default {
   // getUser,
   updateUser,
   deleteUser,
-  createUser,
+  // createUser,
   // getUsers,
   addFriend,
   getFriends,

@@ -43,10 +43,14 @@ class Desktop extends React.Component {
   }
 
   handleVideoSubmit = theatreInfo => {
-    let userId = this.state.user.id;
-    adapter.createTheatre(theatreInfo, userId).then(theatre => {
+    const userId = this.state.user.id;
+    this.props.adapter.createTheatre(theatreInfo, userId)
+    .then(theatre => {
+      debugger;
       this.props.history.push(`/theatre/${theatre.id}`);
-    });
+    }).catch(error => {
+      console.error("Something went wrong:", error);  
+    })
   };
 
   handleLoginSubmit = user => {
@@ -64,9 +68,7 @@ class Desktop extends React.Component {
   };
 
   handleSignUpSubmit = userInfo => {
-    let { username, email, image, password } = userInfo;
-
-    adapter.createUser(username, email, image, password).then(data => {
+    this.props.adapter.createUser(userInfo).then(data => {
       if (data.message) {
         alert(data.message);
         this.props.history.push("/signin");

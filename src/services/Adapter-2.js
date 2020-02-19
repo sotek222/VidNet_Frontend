@@ -32,11 +32,39 @@ class APICommunicator {
   }
 
   getUser() {
-    return fetch(`${this.endpoint}/profile`, this.fetchOptions('GET', true)).then(response => response.json());
+    return fetch(`${this.endpoint}/profile`, this.fetchOptions('GET', true))
+    .then(response => response.json());
   }
 
   loginUser(user) {
-    return fetch(`${this.endpoint}/login`, this.fetchOptions('POST', false, { user })).then(response => response.json());
+    return fetch(`${this.endpoint}/login`, this.fetchOptions('POST', false, { user }))
+    .then(response => response.json());
+  }
+
+  createUser(user) {
+    return fetch(`${this.endpoint}/users`, this.fetchOptions('POST', false, { user }))
+    .then(response => response.json())
+  }
+
+  createTheatre(theatreInfo, userId) {
+    // If these values are defaulted we can set this up in the backend instead.
+    const body = {
+      theatre: {
+        host_id: userId,
+        src: theatreInfo.url,
+        text_chat: theatreInfo.chatChecked,
+        audio_chat: false,
+        video_chat: false,
+        is_public: theatreInfo.public,
+        playing: false,
+        muted: false,
+        elapsed_time: 0,
+        title: theatreInfo.title
+      }
+    };
+    
+    return fetch(`${this.endpoint}/theatres`, this.fetchOptions('POST', true, body))
+    .then(response => response.json());
   }
 
 }
