@@ -47,9 +47,9 @@ const API_URL = "http://localhost:4000/api/v1";
 //   }).then(resp => resp.json());
 // };
 
-const getTheatre = id => {
-  return fetch(`${API_URL}/theatres/${id}`).then(resp => resp.json());
-};
+// const getTheatre = id => {
+//   return fetch(`${API_URL}/theatres/${id}`).then(resp => resp.json());
+// };
 
 const updateTheatrePlaying = (theatre, playing) => {
   let { id, muted, elapsed_time } = theatre;
@@ -272,7 +272,7 @@ const deleteMessage = id => {
 
 export default {
   // createTheatre,
-  getTheatre,
+  // getTheatre,
   getFilteredTheatres,
   updateTheatrePlaying,
   updateTheatreMute,
