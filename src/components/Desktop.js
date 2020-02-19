@@ -50,7 +50,7 @@ class Desktop extends React.Component {
   };
 
   handleLoginSubmit = user => {
-    adapter.loginUser(user.username, user.password).then(data => {
+    this.props.adapter.loginUser(user).then(data => {
       if (data.message) {
         alert(data.message);
         this.props.history.push("/signin");

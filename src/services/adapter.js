@@ -1,25 +1,25 @@
 const API_URL = "http://localhost:4000/api/v1";
 // const API_URL = "https://vid-net-api.localtunnel.me/api/v1";
 
-const getUsers = () => {
-  return fetch(`${API_URL}/users`).then(resp => resp.json());
-};
+// const getUsers = () => {
+//   return fetch(`${API_URL}/users`).then(resp => resp.json());
+// };
 
-const loginUser = (username, password) => {
-  return fetch(`${API_URL}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json"
-    },
-    body: JSON.stringify({
-      user: {
-        username: username,
-        password: password
-      }
-    })
-  }).then(resp => resp.json());
-};
+// const loginUser = (username, password) => {
+//   return fetch(`${API_URL}/login`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Accept: "application/json"
+//     },
+//     body: JSON.stringify({
+//       user: {
+//         username: username,
+//         password: password
+//       }
+//     })
+//   }).then(resp => resp.json());
+// };
 
 const createTheatre = (theatreInfo, id) => {
   let token = localStorage.getItem("user_token");
@@ -97,16 +97,16 @@ const updateTheatreTime = (theatre, time) => {
   }).then(resp => resp.json());
 };
 
-const getUser = () => {
-  let token = localStorage.getItem("user_token");
+// const getUser = () => {
+//   let token = localStorage.getItem("user_token");
 
-  return fetch(`${API_URL}/profile`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }).then(resp => resp.json());
-};
+//   return fetch(`${API_URL}/profile`, {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${token}`
+//     }
+//   }).then(resp => resp.json());
+// };
 
 const updateUser = (id, userInfo) => {
   let token = localStorage.getItem("user_token");
@@ -277,12 +277,12 @@ export default {
   updateTheatrePlaying,
   updateTheatreMute,
   updateTheatreTime,
-  loginUser,
-  getUser,
+  // loginUser,
+  // getUser,
   updateUser,
   deleteUser,
   createUser,
-  getUsers,
+  // getUsers,
   addFriend,
   getFriends,
   getUserFriends,

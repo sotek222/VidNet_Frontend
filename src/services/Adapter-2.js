@@ -11,12 +11,20 @@ class APICommunicator {
       Authorization: `Bearer ${this.token}`
     };
 
-    this.fetchOptions = function(httpVerb = 'GET', auth = false){
-      return {
-        method: httpVerb,
-        headers: auth ? this.authHeaders : this.headers
-      }
-    }
+    this.fetchOptions = function(httpVerb = 'GET', auth = false, body){
+      if(httpVerb === 'GET' || httpVerb === 'DELETE') {
+        return {
+          method: httpVerb,
+          headers: auth ? this.authHeaders : this.headers
+        } 
+      } else {
+        return { 
+          method: httpVerb,
+          headers: auth ? this.authHeaders : this.headers,
+          body: body ? JSON.stringify(body) : {}
+        }
+      }; 
+    };
   }
 
   getUsers() {
@@ -27,7 +35,10 @@ class APICommunicator {
     return fetch(`${this.endpoint}/profile`, this.fetchOptions('GET', true)).then(response => response.json());
   }
 
+  loginUser(user) {
+    return fetch(`${this.endpoint}/login`, this.fetchOptions('POST', false, { user })).then(response => response.json());
+  }
+
 }
 
 export default APICommunicator;
-
