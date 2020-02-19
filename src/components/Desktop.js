@@ -20,6 +20,7 @@ import MailModal from "./MailModal";
 import TheatreBrowseModal from "./TheatreBrowseModal";
 
 class Desktop extends React.Component {
+
   state = {
     user: {},
     logged_in: false,
@@ -31,7 +32,7 @@ class Desktop extends React.Component {
   youGotMail = new Audio(mailSound);
 
   componentDidMount() {
-    adapter.getUser().then(data => {
+    this.props.adapter.getUser().then(data => {
       if (data.message) {
         console.log("I CANT LOG IN!");
         return;
