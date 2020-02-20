@@ -1,7 +1,7 @@
 import React from "react";
-import textSound from "../sounds/text.mp3";
+import sentTextSound from "../sounds/sent_text.wav";
+import receiveTextSound from "../sounds/receive_text.mp3"
 import Draggable from "react-draggable";
-import adapter from "../services/adapter";
 import { ActionCableConsumer } from "react-actioncable-provider";
 import { ThemeProvider } from "styled-components";
 import {
@@ -22,7 +22,8 @@ class ChatBox extends React.Component {
     texts: []
   };
 
-  sentText = new Audio(textSound);
+  receivedText = new Audio(receiveTextSound);
+  sentText = new Audio(sentTextSound);
 
   componentDidMount() {
     this.props.adapter.getChat(this.props.chat.id)
@@ -32,8 +33,8 @@ class ChatBox extends React.Component {
   }
 
   renderTexts = () => {
-    const texts = this.state.texts.map(text => {
-      return <Text sender={text.sender} text={text} />;
+    const texts = this.state.texts.map((text, idx) => {
+      return <Text key={idx} sender={text.sender} text={text} />;
     });
     return texts;
   };
@@ -44,12 +45,16 @@ class ChatBox extends React.Component {
 
   handleSend = e => {
     e.preventDefault();
-    let userId = this.props.user.id;
-    let chatId = this.state.chat.id;
-    let content = this.state.textarea;
-    adapter.sendText(userId, chatId, content).then(data => {
+    const newText = {
+      user_id: this.props.user.id,
+      chat_id: this.state.chat.id,
+      content: this.state.textarea
+    };
+
+    this.props.adapter.sendText(newText)
+    .then(data => {
       this.setState({ textarea: "" });
-    });
+    })
   };
 
   render() {
@@ -88,8 +93,14 @@ class ChatBox extends React.Component {
                   onReceived={text => {
                     this.setState({ texts: [...this.state.texts, text] });
                     this.props.updateScroll();
-                    this.sentText.load();
-                    this.sentText.play();
+
+                    if(text.sender.id === this.props.user.id){
+                      this.sentText.load();
+                      this.sentText.play();
+                    } else {
+                      this.receivedText.load();
+                      this.receivedText.play();
+                    }
                   }}
                 />
               : null
