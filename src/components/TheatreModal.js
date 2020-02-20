@@ -85,7 +85,6 @@ class TheatreModal extends React.Component {
   };
 
   onSeekMouseUp = e => {
-    console.log("SEEKING UP");
     const updatedTheatre = {
       ...this.state.theatre, 
       elapsed_time: e.target.value
@@ -93,24 +92,29 @@ class TheatreModal extends React.Component {
 
     this.setState({ seeking: false, played: parseFloat(e.target.value) });
     this.player.seekTo(parseFloat(e.target.value));
-    // PATCH
-    // adapter.updateTheatreTime(theatre, currentTime);
     this.props.adapter.updateTheatreTime(updatedTheatre);
   };
 
   onSeekForward = () => {
-    let currentTime = this.state.played + 5;
-    let theatre = this.state.theatre;
-    // PATCH
-    adapter.updateTheatreTime(theatre, currentTime);
+    const updatedTheatre = {
+      ...this.state.theatre,
+      elapsed_time: this.state.played + 5
+    };
+    
+    this.props.adapter.updateTheatreTime(updatedTheatre);
   };
 
   onSeekBackward = () => {
-    while (this.state.seeking) {}
-    let currentTime = this.state.played - 5;
-    let theatre = this.state.theatre;
+    // while (this.state.seeking) {}
+    // let currentTime = this.state.played - 5;
+    // let theatre = this.state.theatre;
     // PATCH
-    adapter.updateTheatreTime(theatre, currentTime);
+
+    const updatedTheatre = {
+      ...this.state.theatre,
+      elapsed_time: this.state.played - 5
+    };
+    this.props.adapter.updateTheatreTime(updatedTheatre);
   };
 
   onDuration = duration => {
