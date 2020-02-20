@@ -23,7 +23,8 @@ class APICommunicator {
           headers: auth ? this.authHeaders : this.headers,
           body: body ? JSON.stringify(body) : {}
         }
-      }; 
+      };
+      
     };
   }
 
@@ -70,6 +71,19 @@ class APICommunicator {
   getTheatre(id){
     return fetch(`${this.endpoint}/theatres/${id}`, this.fetchOptions())
     .then(response => response.json())
+  }
+
+  updateTheatre(theatre){
+    return fetch(`${this.endpoint}/theatres/${theatre.id}`, this.fetchOptions('PATCH', false, theatre))
+  }
+
+  updateTheatreTime(theatre){
+    const options = { 
+      method: 'PATCH', 
+      headers: { ...this.headers, seeking: "seeking" }, 
+      body: JSON.stringify(theatre) 
+    };
+    return fetch(`${this.endpoint}/theatres/${theatre.id}`, options) 
   }
 
 }
