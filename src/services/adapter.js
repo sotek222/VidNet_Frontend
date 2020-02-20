@@ -1,55 +1,9 @@
 const API_URL = "http://localhost:4000/api/v1";
-// const API_URL = "https://vid-net-api.localtunnel.me/api/v1";
 
-// const getUsers = () => {
-//   return fetch(`${API_URL}/users`).then(resp => resp.json());
-// };
-
-// const loginUser = (username, password) => {
-//   return fetch(`${API_URL}/login`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Accept: "application/json"
-//     },
-//     body: JSON.stringify({
-//       user: {
-//         username: username,
-//         password: password
-//       }
-//     })
-//   }).then(resp => resp.json());
-// };
-
-// const createTheatre = (theatreInfo, id) => {
-//   let token = localStorage.getItem("user_token");
-
-//   return fetch(`${API_URL}/theatres`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${token}`
-//     },
-//     body: JSON.stringify({
-//       theatre: {
-//         host_id: id,
-//         src: theatreInfo.url,
-//         text_chat: theatreInfo.chatChecked,
-//         audio_chat: false,
-//         video_chat: false,
-//         is_public: theatreInfo.public,
-//         playing: false,
-//         muted: false,
-//         elapsed_time: 0,
-//         title: theatreInfo.title
-//       }
-//     })
-//   }).then(resp => resp.json());
-// };
-
-// const getTheatre = id => {
-//   return fetch(`${API_URL}/theatres/${id}`).then(resp => resp.json());
-// };
+// CURRENT FIX:
+// updateTheatrePlaying,
+//   updateTheatreMute,
+//   updateTheatreTime,
 
 const updateTheatrePlaying = (theatre, playing) => {
   let { id, muted, elapsed_time } = theatre;
@@ -97,17 +51,6 @@ const updateTheatreTime = (theatre, time) => {
   }).then(resp => resp.json());
 };
 
-// const getUser = () => {
-//   let token = localStorage.getItem("user_token");
-
-//   return fetch(`${API_URL}/profile`, {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${token}`
-//     }
-//   }).then(resp => resp.json());
-// };
-
 const updateUser = (id, userInfo) => {
   let token = localStorage.getItem("user_token");
 
@@ -134,23 +77,6 @@ const deleteUser = id => {
     }
   });
 };
-
-// const createUser = (username, email, image, password) => {
-//   return fetch(`${API_URL}/users`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//       user: {
-//         username: username,
-//         email: email,
-//         image: image,
-//         password: password
-//       }
-//     })
-//   }).then(resp => resp.json());
-// };
 
 const addFriend = (userId, friendId) => {
   let token = localStorage.getItem("user_token");
@@ -271,18 +197,12 @@ const deleteMessage = id => {
 };
 
 export default {
-  // createTheatre,
-  // getTheatre,
   getFilteredTheatres,
   updateTheatrePlaying,
   updateTheatreMute,
   updateTheatreTime,
-  // loginUser,
-  // getUser,
   updateUser,
   deleteUser,
-  // createUser,
-  // getUsers,
   addFriend,
   getFriends,
   getUserFriends,
