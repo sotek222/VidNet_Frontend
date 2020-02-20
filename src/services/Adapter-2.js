@@ -91,6 +91,11 @@ class APICommunicator {
     .then(response => response.json());
   }
 
+  sendText(text){
+    return fetch(`${this.endpoint}/texts`, this.fetchOptions('POST', false, { text }))
+    .then(response => response.json());
+  }
+
 }
 
 export default APICommunicator;
