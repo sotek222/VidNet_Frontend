@@ -86,6 +86,11 @@ class APICommunicator {
     return fetch(`${this.endpoint}/theatres/${theatre.id}`, options) 
   }
 
+  getChat(id){
+    return fetch(`${this.endpoint}/chats/${id}`, this.fetchOptions('GET', true))
+    .then(response => response.json());
+  }
+
 }
 
 export default APICommunicator;

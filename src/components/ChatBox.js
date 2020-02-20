@@ -25,7 +25,8 @@ class ChatBox extends React.Component {
   sentText = new Audio(textSound);
 
   componentDidMount() {
-    adapter.getChat(this.props.chat.id).then(chat => {
+    this.props.adapter.getChat(this.props.chat.id)
+    .then(chat => {
       this.setState({ chat });
     });
   }

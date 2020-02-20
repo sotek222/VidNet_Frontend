@@ -2,7 +2,6 @@ import React from "react";
 import screenfull from "screenfull";
 import { findDOMNode } from "react-dom";
 import { ActionCableConsumer } from "react-actioncable-provider";
-import adapter from "../services/adapter";
 import Draggable from "react-draggable";
 import { ThemeProvider } from "styled-components";
 import { themes, Button, Window, WindowContent, Tooltip } from "react95";
@@ -270,6 +269,7 @@ class TheatreModal extends React.Component {
                   updateScroll={this.updateScroll}
                   chat={this.state.theatre.chat}
                   user={this.props.user}
+                  adapter={this.props.adapter}
                 />
               ) : null}
             </WindowContent>
