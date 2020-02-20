@@ -78,18 +78,21 @@ class ChatBox extends React.Component {
               </h3>
             </WindowHeader>
             <WindowContent>
-              <ActionCableConsumer
-                channel={{
-                  channel: "ChatChannel",
-                  chat_id: this.state.chat.id
-                }}
-                onReceived={text => {
-                  this.setState({ texts: [...this.state.texts, text] });
-                  this.props.updateScroll();
-                  this.sentText.load();
-                  this.sentText.play();
-                }}
-              />
+              {this.state.chat.id ? 
+                <ActionCableConsumer
+                  channel={{
+                    channel: "ChatChannel",
+                    chat_id: this.state.chat.id
+                  }}
+                  onReceived={text => {
+                    this.setState({ texts: [...this.state.texts, text] });
+                    this.props.updateScroll();
+                    this.sentText.load();
+                    this.sentText.play();
+                  }}
+                />
+              : null
+              }
               <div id="chat-box" className="chat-container">
                 {this.renderTexts()}
               </div>
