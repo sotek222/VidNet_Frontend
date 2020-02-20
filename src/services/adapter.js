@@ -1,56 +1,5 @@
 const API_URL = "http://localhost:4000/api/v1";
 
-// CURRENT FIX:
-// updateTheatrePlaying,
-//   updateTheatreMute,
-//   updateTheatreTime,
-
-const updateTheatrePlaying = (theatre, playing) => {
-  let { id, muted, elapsed_time } = theatre;
-  return fetch(`${API_URL}/theatres/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      playing: playing,
-      muted: muted,
-      elapsed_time: elapsed_time
-    })
-  }).then(resp => resp.json());
-};
-
-const updateTheatreMute = (theatre, muted) => {
-  let { id, playing, elapsed_time } = theatre;
-  return fetch(`${API_URL}/theatres/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      playing: playing,
-      muted: muted,
-      elapsed_time: elapsed_time
-    })
-  }).then(resp => resp.json());
-};
-
-const updateTheatreTime = (theatre, time) => {
-  let { id, playing, muted } = theatre;
-  return fetch(`${API_URL}/theatres/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      seeking: "seeking"
-    },
-    body: JSON.stringify({
-      playing: playing,
-      muted: muted,
-      elapsed_time: time
-    })
-  }).then(resp => resp.json());
-};
-
 const updateUser = (id, userInfo) => {
   let token = localStorage.getItem("user_token");
 
@@ -198,9 +147,6 @@ const deleteMessage = id => {
 
 export default {
   getFilteredTheatres,
-  updateTheatrePlaying,
-  updateTheatreMute,
-  updateTheatreTime,
   updateUser,
   deleteUser,
   addFriend,
