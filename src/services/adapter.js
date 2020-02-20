@@ -86,18 +86,6 @@ const createMessage = (inboxId, senderId, link) => {
   }).then(resp => resp.json());
 };
 
-const getChat = chatId => {
-  let token = localStorage.getItem("user_token");
-
-  return fetch(`${API_URL}/chats/${chatId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    }
-  }).then(resp => resp.json());
-};
-
 const sendText = (userId, chatId, content) => {
   return fetch(`${API_URL}/texts`, {
     method: "POST",
@@ -155,6 +143,5 @@ export default {
   deleteFriendship,
   createMessage,
   deleteMessage,
-  getChat,
   sendText
 };
