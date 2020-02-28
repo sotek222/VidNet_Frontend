@@ -28,23 +28,28 @@ class APICommunicator {
     };
   }
 
+  parseData(response){
+    return response.json();
+  }
+
+
   getUsers() {
-    return fetch(`${this.endpoint}/users`).then(resp => resp.json());
+    return fetch(`${this.endpoint}/users`).then(this.parseData);
   }
 
   getUser() {
     return fetch(`${this.endpoint}/profile`, this.fetchOptions('GET', true))
-    .then(response => response.json());
+      .then(this.parseData);
   }
 
   loginUser(user) {
     return fetch(`${this.endpoint}/login`, this.fetchOptions('POST', false, { user }))
-    .then(response => response.json());
+      .then(this.parseData);
   }
 
   createUser(user) {
     return fetch(`${this.endpoint}/users`, this.fetchOptions('POST', false, { user }))
-    .then(response => response.json())
+      .then(this.parseData)
   }
 
   createTheatre(theatreInfo, userId) {
@@ -65,12 +70,12 @@ class APICommunicator {
     };
     
     return fetch(`${this.endpoint}/theatres`, this.fetchOptions('POST', true, body))
-    .then(response => response.json());
+      .then(this.parseData);
   }
 
   getTheatre(id){
     return fetch(`${this.endpoint}/theatres/${id}`, this.fetchOptions())
-    .then(response => response.json())
+      .then(this.parseData)
   }
 
   updateTheatre(theatre){
@@ -88,17 +93,17 @@ class APICommunicator {
 
   getChat(id){
     return fetch(`${this.endpoint}/chats/${id}`, this.fetchOptions('GET', true))
-    .then(response => response.json());
+      .then(this.parseData);
   }
 
   sendText(text){
     return fetch(`${this.endpoint}/texts`, this.fetchOptions('POST', false, { text }))
-    .then(response => response.json());
+      .then(this.parseData);
   }
 
   deleteFriendship(id){
     return fetch(`${this.endpoint}/friends/${id}`, this.fetchOptions('DELETE', true))
-    .then(response => response.json());
+      .then(this.parseData);
   }
 
 }
