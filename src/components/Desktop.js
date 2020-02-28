@@ -179,6 +179,7 @@ class Desktop extends React.Component {
               <FriendsModal
                 loggedIn={this.state.logged_in}
                 user={this.state.user}
+                adapter={this.props.adapter}
               />
             )}
           />
