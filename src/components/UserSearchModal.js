@@ -46,7 +46,6 @@ class UserSearchModal extends React.Component {
   };
 
   render() {
-    adapter.getUsers()
     return (
       <ThemeProvider theme={themes.default}>
         <Draggable cancel=".not-draggable">
