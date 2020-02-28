@@ -96,6 +96,11 @@ class APICommunicator {
     .then(response => response.json());
   }
 
+  deleteFriendship(id){
+    return fetch(`${this.endpoint}/friends/${id}`, this.fetchOptions('DELETE', true))
+    .then(response => response.json());
+  }
+
 }
 
 export default APICommunicator;
