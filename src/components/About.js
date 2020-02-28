@@ -16,7 +16,7 @@ const About = props => {
         </p>
         <p>
           Aesthetically the website is designed with a certain operating system
-          in mind. If you like the 90's then you'll like this site!
+          in mind. If you like the 90s then you'll like this site!
         </p>
         <h4 style={{ marginBottom: -2 }}>About the Developer:</h4>
         <p>
