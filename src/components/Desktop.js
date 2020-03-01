@@ -5,6 +5,8 @@ import { ActionCableConsumer } from "react-actioncable-provider";
 import startSound from "../sounds/StartUp.mp3";
 import downSound from "../sounds/Shutdown.mp3";
 import mailSound from "../sounds/youGotmail.mp3";
+import error from "../sounds/Error.mp3";
+import success from "../sounds/Success.mp3";
 
 import StartBar from "./StartBar";
 import IconsContainer from "./IconsContainer";
@@ -22,6 +24,8 @@ class Desktop extends React.Component {
 
   state = {
     user: {},
+    friends: [],
+    filteredFriends: [],
     logged_in: false,
     newMessage: false
   };
@@ -29,6 +33,8 @@ class Desktop extends React.Component {
   startUp = new Audio(startSound);
   shutDown = new Audio(downSound);
   youGotMail = new Audio(mailSound);
+  errorSound = new Audio(error);
+  successSound = new Audio(success);
 
   componentDidMount() {
     this.props.adapter.getUser().then(data => {
@@ -36,7 +42,12 @@ class Desktop extends React.Component {
         console.log("I CANT LOG IN!");
         return;
       } else {
-        this.setState({ user: data.user, logged_in: true });
+        this.setState({ 
+          user: data.user, 
+          logged_in: true,
+          friends: data.user.friendees,
+          filteredFriends: data.user.friendees
+        });
       }
     });
   }
@@ -91,6 +102,27 @@ class Desktop extends React.Component {
   handleUserUpdate = user => {
     this.setState({ user: user }, () => this.props.history.push("/user"));
   };
+
+
+  handleDeleteFriend= (friendId) => {
+    const foundFriendship = this.state.user.friend_ships.find(fs => {
+      return fs.friendee_id === friendId;
+    });
+
+    this.props.adapter.deleteFriendship(foundFriendship.id)
+    .then(() => {
+      const filteredFriends = this.state.filteredFriends.filter(friend => friend.id !== friendId);
+
+      this.setState({
+        friends: filteredFriends,
+        filteredFriends: filteredFriends,
+      }, () => {
+        this.successSound.load();
+        this.successSound.play(); 
+      });
+
+    });
+  }
 
   render() {
     return (
@@ -180,6 +212,8 @@ class Desktop extends React.Component {
                 loggedIn={this.state.logged_in}
                 user={this.state.user}
                 adapter={this.props.adapter}
+                friends={this.state.filteredFriends}
+                handleDeleteFriend={this.handleDeleteFriend}
               />
             )}
           />

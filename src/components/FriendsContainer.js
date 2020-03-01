@@ -4,29 +4,22 @@ import { Table, TableBody } from "react95";
 
 class FriendsContainer extends React.Component {
   renderFriends = () => {
-    const users = [];
-    if (this.props.friends) {
-      this.props.friends.forEach(friendShip => {
-        if (friendShip.friender_id === this.props.currentUser.id) {
-          users.push(
-            <UserCard
-              key={friendShip.friendee.id}
-              friendShip={friendShip}
-              user={friendShip.friendee}
-              currentUser={this.props.currentUser}
-              isInFriends={this.props.isInFriends}
-              handleDeleteFriend={this.props.handleDeleteFriend}
-            />
-          );
-        }
-      });
-    }
-    return users;
-  };
-
-  render() {
-    return (
-      <div style={{ marginTop: 6 }} className="container">
+      return this.props.friends.map(friend => {
+          return (<UserCard
+            key={friend.id}
+            // friendShip={friendShip}
+            user={friend}
+            currentUser={this.props.currentUser}
+            isInFriends={this.props.isInFriends}
+            handleClick={this.props.handleDeleteFriend}
+            adapter={this.props.adapter}
+            />)
+          });
+        };
+        
+        render() {
+          return (
+            <div style={{ marginTop: 6 }} className="container">
         <Table style={{ marginTop: 6 }}>
           <TableBody>{this.renderFriends()}</TableBody>
         </Table>
@@ -36,3 +29,5 @@ class FriendsContainer extends React.Component {
 }
 
 export default FriendsContainer;
+
+// handleDeleteFriend={this.props.handleDeleteFriend}

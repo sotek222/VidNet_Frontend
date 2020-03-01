@@ -1,7 +1,5 @@
 import React from "react";
 import adapter from "../services/adapter";
-import error from "../sounds/Error.mp3";
-import success from "../sounds/Success.mp3";
 import { Button, Divider, WindowHeader } from "react95";
 
 class UserCard extends React.Component {
@@ -9,9 +7,6 @@ class UserCard extends React.Component {
     friend: false,
     added: false
   };
-
-  errorSound = new Audio(error);
-  successSound = new Audio(success);
 
   checkIfFriends = user => {
     return user.friendees.find(friend => {
@@ -46,11 +41,18 @@ class UserCard extends React.Component {
   };
 
   handleRemoveClick = () => {
-    adapter.deleteFriendship(this.props.friendShip.id).then(user => {
-      this.successSound.load();
-      this.successSound.play();
-      this.props.handleDeleteFriend(user.id);
-    });
+    // const foundFriendship = this.props.currentUser.friend_ships.find(fs => {
+    //   return fs.friendee_id === this.props.user.id
+    // })
+    
+    this.props.handleDeleteFriend(this.props.user.id);
+
+    // this.props.adapter.deleteFriendship(foundFriendship.id)
+    // .then(friendship => {
+    //   this.successSound.load();
+    //   this.successSound.play();
+    //   this.props.handleDeleteFriend(friendship.friendee_id);
+    // });
   };
 
   handleInviteClick = () => {
@@ -109,12 +111,8 @@ class UserCard extends React.Component {
             ) : (
               <Button
                 fullWidth
-                onClick={
-                  this.props.isInFriends
-                    ? this.handleRemoveClick
-                    : this.handleAddClick
-                }
-              >
+                onClick={() => this.props.handleClick(this.props.user.id)}
+                >
                 {this.props.isInFriends ? "Remove Friend" : "Add Friend"}
               </Button>
             )}
@@ -126,3 +124,9 @@ class UserCard extends React.Component {
 }
 
 export default UserCard;
+
+// onClick={
+//   this.props.isInFriends
+//       ? () => this.props.handleDeleteFriend(this.props.user.id)
+//       : this.handleAddClick
+//     }
