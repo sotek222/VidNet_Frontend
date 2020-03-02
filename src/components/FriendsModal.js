@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import adapter from "../services/adapter";
 import Draggable from "react-draggable";
 import { ThemeProvider } from "styled-components";
 import { themes, Window, WindowContent, Divider } from "react95";
@@ -10,18 +9,9 @@ import FriendsContainer from "./FriendsContainer";
 import ModalTitle from "./ModalTitle";
 
 class FriendsModal extends React.Component {
-  // state = {
-  //   friends: [],
-  //   filteredFriends: []
-  // };
 
   componentDidMount() {
-    if (this.props.loggedIn) {
-      // this.setState({
-      //   friends: this.props.user.friendees,
-      //   filteredFriends: this.props.user.friendees
-      // })
-    } else {
+    if (!this.props.loggedIn) {
       this.props.history.push("/signin");
     }
   }

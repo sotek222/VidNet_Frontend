@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import adapter from "../services/adapter";
 import Draggable from "react-draggable";
 import { ThemeProvider } from "styled-components";
 import { themes, Window, WindowContent, Divider } from "react95";
@@ -18,7 +17,7 @@ class UserSearchModal extends React.Component {
 
   componentDidMount() {
     if (this.props.loggedIn) {
-      adapter.getUsers().then(users => {
+      this.props.adapter.getUsers().then(users => {
         const usersFilteredArr = users.filter(userObj => {
           return userObj.id !== this.props.user.id;
         });
@@ -67,6 +66,7 @@ class UserSearchModal extends React.Component {
               <UsersContainer
                 currentUser={this.props.user}
                 users={this.state.filteredUsers}
+                handleAddFriend={this.props.handleAddFriend}
               />
             </WindowContent>
           </Window>
