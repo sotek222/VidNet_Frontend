@@ -106,6 +106,23 @@ class APICommunicator {
       .then(this.parseData);
   }
 
+  addFriend(userId, friendId){
+    const body = {
+      friender_id: userId,
+      friendee_id: friendId
+    };
+
+    return fetch(`${this.endpoint}/friends`, this.fetchOptions('POST', true, body))
+      .then(this.parseData);
+  }
+
+
+  
 }
 
 export default APICommunicator;
+// Possible abstraction to use for multiple resources
+  // getResource(resourceName, auth = false, id = ''){
+  //   return fetch(`${this.endpoint}/${resourceName}/${id}`, this.fetchOptions('GET', true))
+  //     .then(this.parseData);
+  // }
