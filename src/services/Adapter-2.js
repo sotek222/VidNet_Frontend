@@ -101,8 +101,8 @@ class APICommunicator {
       .then(this.parseData);
   }
 
-  deleteFriendship(id){
-    return fetch(`${this.endpoint}/friends/${id}`, this.fetchOptions('DELETE', true))
+  deleteFriendship(userId, friendId){
+    return fetch(`${this.endpoint}/friends/${friendId}/${userId}`, this.fetchOptions('DELETE', true))
       .then(this.parseData);
   }
 
@@ -115,7 +115,6 @@ class APICommunicator {
     return fetch(`${this.endpoint}/friends`, this.fetchOptions('POST', true, body))
       .then(this.parseData);
   }
-
 
   
 }

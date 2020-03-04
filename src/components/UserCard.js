@@ -8,53 +8,6 @@ class UserCard extends React.Component {
     added: false
   };
 
-  checkIfFriends = user => {
-    return user.friendees.find(friend => {
-      return friend.id === this.props.user.id;
-    });
-  };
-
-  handleAddClick = () => {
-    adapter.getUser().then(data => {
-      if (this.checkIfFriends(data.user)) {
-        this.setState({ friend: true }, () => {
-          this.errorSound.load();
-          this.errorSound.play();
-          setTimeout(() => {
-            this.setState({ friend: false });
-          }, 5000);
-        });
-      } else {
-        adapter
-          .addFriend(this.props.currentUser.id, this.props.user.id)
-          .then(data => {
-            this.setState({ added: true }, () => {
-              this.successSound.load();
-              this.successSound.play();
-              setTimeout(() => {
-                this.setState({ added: false });
-              }, 5000);
-            });
-          });
-      }
-    });
-  };
-
-  handleRemoveClick = () => {
-    // const foundFriendship = this.props.currentUser.friend_ships.find(fs => {
-    //   return fs.friendee_id === this.props.user.id
-    // })
-    
-    this.props.handleDeleteFriend(this.props.user.id);
-
-    // this.props.adapter.deleteFriendship(foundFriendship.id)
-    // .then(friendship => {
-    //   this.successSound.load();
-    //   this.successSound.play();
-    //   this.props.handleDeleteFriend(friendship.friendee_id);
-    // });
-  };
-
   handleInviteClick = () => {
     let inboxId = this.props.user.id;
     let senderId = this.props.currentUser.id;
@@ -130,3 +83,37 @@ export default UserCard;
 //       ? () => this.props.handleDeleteFriend(this.props.user.id)
 //       : this.handleAddClick
 //     }
+
+
+
+// checkIfFriends = user => {
+//   return user.friendees.find(friend => {
+//     return friend.id === this.props.user.id;
+//   });
+// };
+
+// handleAddClick = () => {
+//   adapter.getUser().then(data => {
+//     if (this.checkIfFriends(data.user)) {
+//       this.setState({ friend: true }, () => {
+//         this.errorSound.load();
+//         this.errorSound.play();
+//         setTimeout(() => {
+//           this.setState({ friend: false });
+//         }, 5000);
+//       });
+//     } else {
+//       adapter
+//         .addFriend(this.props.currentUser.id, this.props.user.id)
+//         .then(data => {
+//           this.setState({ added: true }, () => {
+//             this.successSound.load();
+//             this.successSound.play();
+//             setTimeout(() => {
+//               this.setState({ added: false });
+//             }, 5000);
+//           });
+//         });
+//     }
+//   });
+// };

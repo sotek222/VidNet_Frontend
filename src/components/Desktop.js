@@ -103,13 +103,29 @@ class Desktop extends React.Component {
     this.setState({ user: user }, () => this.props.history.push("/user"));
   };
 
+  handleAddFriend = (id) => {
+    const foundFriend = this.state.friends.find(friend => friend.id === id);
 
-  handleDeleteFriend= (friendId) => {
-    const foundFriendship = this.state.user.friend_ships.find(fs => {
-      return fs.friendee_id === friendId;
-    });
+    if(foundFriend){
+      this.errorSound.load();
+      this.errorSound.play();
+    } else {
+      this.props.adapter
+      .addFriend(this.state.user.id, id)
+      .then(newFriendship => {
+        this.setState({
+          friends: [...this.state.friends, newFriendship.friendee],
+          filteredFriends: [...this.state.friends, newFriendship.friendee]
+        }, () => {
+          this.successSound.load();
+          this.successSound.play();
+        });
+      });
+    };
+  }
 
-    this.props.adapter.deleteFriendship(foundFriendship.id)
+  handleDeleteFriend = (friendId) => {
+    this.props.adapter.deleteFriendship(this.state.user.id, friendId)
     .then(() => {
       const filteredFriends = this.state.filteredFriends.filter(friend => friend.id !== friendId);
 
@@ -202,6 +218,8 @@ class Desktop extends React.Component {
               <UserSearchModal
                 loggedIn={this.state.logged_in}
                 user={this.state.user}
+                handleAddFriend={this.handleAddFriend}
+                adapter={this.props.adapter}
               />
             )}
           />

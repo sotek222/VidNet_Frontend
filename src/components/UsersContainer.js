@@ -11,6 +11,7 @@ const UsersContainer = props => {
         user={userObj}
         currentUser={props.currentUser}
         isInFriends={props.isInFriends}
+        handleClick={props.handleAddFriend}
       />
     );
   });
