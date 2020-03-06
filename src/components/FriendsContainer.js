@@ -7,7 +7,6 @@ class FriendsContainer extends React.Component {
       return this.props.friends.map(friend => {
           return (<UserCard
             key={friend.id}
-            // friendShip={friendShip}
             user={friend}
             currentUser={this.props.currentUser}
             isInFriends={this.props.isInFriends}
@@ -29,5 +28,3 @@ class FriendsContainer extends React.Component {
 }
 
 export default FriendsContainer;
-
-// handleDeleteFriend={this.props.handleDeleteFriend}
