@@ -122,6 +122,14 @@ class APICommunicator {
       .then(this.parseData);
   }
 
+  updateUser(id, userInfo){
+    return fetch(`${this.endpoint}/users/${id}`, this.fetchOptions('PATCH', true, userInfo))
+    .then(this.parseData);
+  }
+
+  deleteUser(id){
+    return fetch(`${this.endpoint}/users/${id}`, this.fetchOptions('DELETE', true))
+  }
   
 }
 

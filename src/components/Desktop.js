@@ -214,6 +214,7 @@ class Desktop extends React.Component {
             render={() => (
               <UserEditAccount
                 handleUserUpdate={this.handleUserUpdate}
+                adapter={this.props.adapter}
                 loggedIn={this.state.logged_in}
                 user={this.state.user}
               />

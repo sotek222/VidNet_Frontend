@@ -1,5 +1,4 @@
 import React from "react";
-import adapter from "../services/adapter";
 import Draggable from "react-draggable";
 import { withRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
@@ -24,23 +23,21 @@ class UserEditAccount extends React.Component {
     if (!this.props.loggedIn) {
       this.props.history.push("/signin");
     } else {
-      let { image, email } = this.props.user;
+      const { image, email } = this.props.user;
       this.setState({ image, email });
     }
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    let userId = this.props.user.id;
-    let userInfo = this.state;
-    adapter.updateUser(userId, userInfo).then(data => {
-      this.props.handleUserUpdate(data.user);
-    });
+    const userId = this.props.user.id;
+    this.props.adapter.updateUser(userId, this.state)
+    .then(data => this.props.handleUserUpdate(data.user));
   };
 
   handleDeleteClick = () => {
-    let userId = this.props.user.id;
-    adapter.deleteUser(userId).then(this.props.history.push("/signin"));
+    const userId = this.props.user.id;
+    this.props.adapter.deleteUser(userId).then(this.props.history.push("/signin"));
   };
 
   handleChange = e => {
