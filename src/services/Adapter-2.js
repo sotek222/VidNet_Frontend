@@ -116,6 +116,12 @@ class APICommunicator {
       .then(this.parseData);
   }
 
+
+  getFilteredTheatres(){
+    return fetch(`${this.endpoint}/filtered`)
+      .then(this.parseData);
+  }
+
   
 }
 
