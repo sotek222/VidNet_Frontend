@@ -27,7 +27,8 @@ class Desktop extends React.Component {
     friends: [],
     filteredFriends: [],
     logged_in: false,
-    newMessage: false
+    newMessage: false,
+    searchInput: ""
   };
 
   startUp = new Audio(startSound);
@@ -60,7 +61,7 @@ class Desktop extends React.Component {
     }).catch(error => {
       console.error("Something went wrong:", error);  
     })
-  };
+  }
 
   handleLoginSubmit = user => {
     this.props.adapter.loginUser(user).then(data => {
@@ -74,7 +75,7 @@ class Desktop extends React.Component {
         this.startUp.play();
       }
     });
-  };
+  }
 
   handleSignUpSubmit = userInfo => {
     this.props.adapter.createUser(userInfo).then(data => {
@@ -88,7 +89,7 @@ class Desktop extends React.Component {
         this.startUp.play();
       }
     });
-  };
+  }
 
   handleLogout = () => {
     localStorage.removeItem("user_token");
@@ -96,13 +97,13 @@ class Desktop extends React.Component {
       this.props.history.push("/signin");
       this.shutDown.play();
     });
-  };
+  }
 
   handleUserUpdate = user => {
     this.setState({ user: user }, () => this.props.history.push("/user"));
-  };
+  }
 
-  handleAddFriend = (id) => {
+  handleAddFriend = id => {
     const foundFriend = this.state.friends.find(friend => friend.id === id);
 
     if(foundFriend){
@@ -123,7 +124,7 @@ class Desktop extends React.Component {
     };
   }
 
-  handleDeleteFriend = (friendId) => {
+  handleDeleteFriend = friendId => {
     this.props.adapter.deleteFriendship(this.state.user.id, friendId)
     .then(() => {
       const filteredFriends = this.state.filteredFriends.filter(friend => friend.id !== friendId);
@@ -137,6 +138,21 @@ class Desktop extends React.Component {
       });
 
     });
+  }
+
+  handleFriendSearch = term => {
+    const filteredFriends = this.state.friends.filter(friend => {
+      return friend.username
+        .toLowerCase()
+        .includes(term.toLowerCase());
+    });
+    this.setState({ filteredFriends });
+  };
+
+  handleFriendSearchChange = e => {
+    this.setState({ searchInput: e.target.value }, () =>
+      this.handleFriendSearch(this.state.searchInput)
+    );
   }
 
   render() {
@@ -226,6 +242,7 @@ class Desktop extends React.Component {
             path="/friends"
             render={() => (
               <FriendsModal
+                handleFriendSearchChange={this.handleFriendSearchChange}
                 loggedIn={this.state.logged_in}
                 user={this.state.user}
                 adapter={this.props.adapter}

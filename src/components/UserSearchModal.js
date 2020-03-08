@@ -12,7 +12,7 @@ class UserSearchModal extends React.Component {
   state = {
     users: [],
     filteredUsers: [],
-    input: ""
+    searchInput: ""
   };
 
   componentDidMount() {
@@ -39,8 +39,8 @@ class UserSearchModal extends React.Component {
   };
 
   handleChange = e => {
-    this.setState({ input: e.target.value }, () =>
-      this.handleSearch(this.state.input)
+    this.setState({ searchInput: e.target.value }, () =>
+      this.handleSearch(this.state.searchInput)
     );
   };
 
@@ -61,7 +61,7 @@ class UserSearchModal extends React.Component {
               <Divider />
               <SearchBar
                 handleChange={this.handleChange}
-                input={this.state.input}
+                searchInput={this.state.searchInput}
               />
               <UsersContainer
                 currentUser={this.props.user}

@@ -40,7 +40,9 @@ class FriendsModal extends React.Component {
             <WindowContent>
               <h1>Friends Lookup:</h1>
               <Divider />
-              <SearchBar handleChange={this.handleChange} />
+              <SearchBar 
+                handleChange={this.props.handleFriendSearchChange} 
+              />
               <FriendsContainer
                 currentUser={this.props.user}
                 friends={this.props.friends}

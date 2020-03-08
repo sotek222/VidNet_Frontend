@@ -12,7 +12,7 @@ class SearchBar extends React.Component {
           shadow={false}
           onChange={this.props.handleChange}
           type="text"
-          value={this.props.input}
+          value={this.props.searchInput}
         />
       </div>
     );
