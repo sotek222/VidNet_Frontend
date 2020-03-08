@@ -1,5 +1,4 @@
 import React from "react";
-import adapter from "../services/adapter";
 import Draggable from "react-draggable";
 import { ThemeProvider } from "styled-components";
 import { themes, Window, WindowContent } from "react95";
@@ -13,7 +12,7 @@ class TheatreBrowseModal extends React.Component {
   };
 
   componentDidMount() {
-    adapter.getFilteredTheatres().then(filteredTheatres => {
+    this.props.adapter.getFilteredTheatres().then(filteredTheatres => {
       this.setState({ filteredTheatres });
     });
   }

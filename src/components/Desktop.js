@@ -162,7 +162,8 @@ class Desktop extends React.Component {
                   )
             }
           />
-          <Route path="/theatre/search" render={() => <TheatreBrowseModal />} />
+          <Route path="/theatre/search" render={() => 
+          <TheatreBrowseModal adapter={this.props.adapter} />} />
           <Route
             path="/theatre/:id"
             render={() => (
