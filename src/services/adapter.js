@@ -27,17 +27,6 @@ const deleteUser = id => {
   });
 };
 
-const getFriends = () => {
-  let token = localStorage.getItem("user_token");
-  return fetch(`${API_URL}/friends`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    }
-  }).then(resp => resp.json());
-};
-
 const createMessage = (inboxId, senderId, link) => {
   let token = localStorage.getItem("user_token");
 
@@ -58,25 +47,6 @@ const createMessage = (inboxId, senderId, link) => {
   }).then(resp => resp.json());
 };
 
-const getUserFriends = userId => {
-  let token = localStorage.getItem("user_token");
-
-  return fetch(`${API_URL}/get_my_friends`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      user_id: userId
-    })
-  }).then(resp => resp.json());
-};
-
-const getFilteredTheatres = () => {
-  return fetch(`${API_URL}/filtered`).then(resp => resp.json());
-};
-
 const deleteMessage = id => {
   let token = localStorage.getItem("user_token");
 
@@ -90,11 +60,8 @@ const deleteMessage = id => {
 };
 
 export default {
-  getFilteredTheatres,
   updateUser,
   deleteUser,
-  getFriends,
-  getUserFriends,
   createMessage,
   deleteMessage,
 };
