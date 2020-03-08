@@ -1,5 +1,4 @@
 import React from "react";
-import adapter from "../services/adapter";
 import Draggable from "react-draggable";
 import { ThemeProvider } from "styled-components";
 import { themes, Button, Window, WindowContent, WindowHeader } from "react95";
@@ -7,19 +6,6 @@ import { themes, Button, Window, WindowContent, WindowHeader } from "react95";
 import FriendsPanelContainer from "./FriendsPanelContainer";
 
 class FriendsPanel extends React.Component {
-  state = {
-    friends: []
-  };
-
-  componentDidMount() {
-    adapter.getUserFriends(this.props.currentUser.id).then(friendsArray => {
-      const userFriends = [];
-      friendsArray.forEach(friendObj => {
-        userFriends.push(friendObj.friendee);
-      });
-      this.setState({ friends: userFriends });
-    });
-  }
 
   render() {
     return (
@@ -59,7 +45,7 @@ class FriendsPanel extends React.Component {
               <FriendsPanelContainer
                 currentUser={this.props.currentUser}
                 loggedIn={this.props.loggedIn}
-                friends={this.state.friends}
+                friends={this.props.friends}
               />
             </WindowContent>
           </Window>

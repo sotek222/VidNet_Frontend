@@ -56,7 +56,6 @@ class Desktop extends React.Component {
     const userId = this.state.user.id;
     this.props.adapter.createTheatre(theatreInfo, userId)
     .then(theatre => {
-      debugger;
       this.props.history.push(`/theatre/${theatre.id}`);
     }).catch(error => {
       console.error("Something went wrong:", error);  
